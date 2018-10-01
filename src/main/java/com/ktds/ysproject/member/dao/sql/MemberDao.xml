@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberDao">
+	<insert id="insertNewMember" parameterType="MemberVO">
+		INSERT	INTO	MEMBER 	(
+									EMAIL
+									, NAME
+									, NICKNAME
+									, PASSWORD
+									, SALT
+									, PROFILE_IMG
+									, LOGIN_FAIL_COUNT
+									, MEMBER_AUTHORITY
+									, LOGIN_FAIL_TIME
+								 )
+		VALUES					 (
+									#{email}
+									, #{name}
+									, #{nickname}
+									, #{password}
+									, #{salt}
+									, #{profileImg}
+									, #{loginFailCount}
+									, #{memberAuthority}
+									, SYSDATE
+								 )
+	</insert>
+	
+	<select id="selectOneMember" parameterType="MemberVO" resultType="MemberVO">
+		SELECT	EMAIL email
+				, NAME name
+				, NICKNAME nickname
+				, PASSWORD password
+				, SALT salt
+				, PROFILE_IMG profileImg
+				, LOGIN_FAIL_COUNT loginFailCount
+				, MEMBER_AUTHORITY memberAuthority
+				, LOGIN_FAIL_TIME loginFailTime
+		FROM	MEMBER
+		WHERE	EMAIL = #{email}
+		AND 	PASSWORD = #{password}
+	</select>
+</mapper>
