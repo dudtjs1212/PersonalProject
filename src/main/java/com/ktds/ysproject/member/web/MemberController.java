@@ -117,8 +117,6 @@ public class MemberController {
 		if ( errors.hasErrors() ) {
 			view.setViewName("member/login");
 			view.addObject("memberVO", memberVO);
-			
-			System.out.println("DSFdsfs");
 			return view;
 		}
 		
