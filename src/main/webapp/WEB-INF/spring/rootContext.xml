@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- 공통기능(Rollback, Commit) 빈 생성 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!--  Rollback, Commit 대상 메소드 지정 -->
+	<tx:advice id="transactionAdvisor" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="read*" read-only="true"/>
+			<tx:method name="update*" rollback-for="RuntimeException"/>
+			<tx:method name="regist*" rollback-for="RuntimeException"/>
+			<tx:method name="create*" rollback-for="RuntimeException"/>
+			<tx:method name="delete*" rollback-for="RuntimeException"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- Transaction(Commit, Rollback) 대상 클래스 지정 -->
+	<aop:config>
+		<aop:pointcut 	expression="execution ( * com.ktds..service.*ServiceImpl.*(..) )" 
+						id="transactionPointcut"/>
+		<aop:advisor advice-ref="transactionAdvisor" pointcut-ref="transactionPointcut"/>
+	</aop:config> 
+
+	<!-- DB 연결 -->
+	<bean	id="dataSource"
+			class="org.apache.commons.dbcp.BasicDataSource">
+			<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+			<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+			<property name="username" value="GAME_REVIEW_SITE"/>
+			<property name="password" value="jys"/>
+	</bean>
+	
+	<!-- MyBatis -->
+	<!-- MyBatis가 DB에 연결하기 위한 객체 -->
+	<bean	id="sqlSessionFactory"
+			class="org.mybatis.spring.SqlSessionFactoryBean">
+			<property name="dataSource" ref="dataSource" />
+			<property name="mapperLocations" value="classpath:com/ktds/ysproject/**/dao/sql/*.xml" /> <!-- Mapper 파일은 sql 이 들어있는 파일 -->
+			<property name="configLocation" value="classpath:/mybatis.xml" />  <!-- Type Arias 가 들어있는 파일 -->
+	</bean>
+	
+	<!-- MyBatis가 실제 쿼리를 날리는 객체 -->
+	<bean	id="sqlSessionTemplate"
+			class="org.mybatis.spring.SqlSessionTemplate">
+			<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+
+</beans>
