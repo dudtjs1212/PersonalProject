@@ -7,12 +7,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.ktds.ysproject.member.dao.MemberDao;
+import com.ktds.ysproject.member.biz.MemberBiz;
 import com.ktds.ysproject.member.vo.MemberVO;
 
 public class SessionInterceptor extends HandlerInterceptorAdapter {
 
-	private MemberDao memberDao;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -21,7 +20,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		String contextPath = request.getContextPath();
 		if ( session.getAttribute("_USER_") == null ) {
 			response.sendRedirect(contextPath);
-			System.out.println("DSAFadsfasfda");
 			return false;
 		}
 		return true;
@@ -33,8 +31,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		MemberVO sessionMemberVO = (MemberVO) session.getAttribute("_USER_");
 		if ( sessionMemberVO != null ) {			
-			MemberVO memberVO = memberDao.selectOneMember(sessionMemberVO);
-			session.setAttribute("_USER_", memberVO);
+			session.setAttribute("_USER_", sessionMemberVO);
 		}
 	}
 }

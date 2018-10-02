@@ -24,6 +24,16 @@ public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {
 	public MemberVO selectOneMember(MemberVO memberVO) {
 		return getSqlSession().selectOne("MemberDao.selectOneMember", memberVO);
 	}
+
+	@Override
+	public String selectSaltById(String email) {
+		return getSqlSession().selectOne("MemberDao.selectSaltById", email);
+	}
+
+	@Override
+	public int selectOneEmail(String email) {
+		return getSqlSession().selectOne("MemberDao.selectOneEmail", email);
+	}
 	
 	
 }

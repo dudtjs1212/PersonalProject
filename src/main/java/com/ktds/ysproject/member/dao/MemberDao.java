@@ -8,4 +8,8 @@ public interface MemberDao {
 	
 	public MemberVO selectOneMember(MemberVO memberVO);
 	
+	public String selectSaltById(String email);
+	
+	public int selectOneEmail(String email);
+	
 }

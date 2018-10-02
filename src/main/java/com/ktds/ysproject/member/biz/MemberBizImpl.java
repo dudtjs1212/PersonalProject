@@ -28,7 +28,15 @@ public class MemberBizImpl implements MemberBiz {
 
 	@Override
 	public MemberVO readOneMember(MemberVO memberVO) {
+		String salt = this.memberDao.selectSaltById(memberVO.getEmail());
+		String password = this.getHashedPassword(salt, memberVO.getPassword());
+		memberVO.setPassword(password);
 		return memberDao.selectOneMember(memberVO);
+	}
+
+	@Override
+	public boolean readOneEmail(String email) {
+		return memberDao.selectOneEmail(email) > 0;
 	}
 	
 	

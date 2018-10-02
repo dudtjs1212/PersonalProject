@@ -22,4 +22,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberBiz.readOneMember(memberVO);
 	}
 
+	@Override
+	public boolean readOneEmail(String email) {
+		return memberBiz.readOneEmail(email);
+	}
+
 }

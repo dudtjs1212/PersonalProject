@@ -8,7 +8,7 @@ public class BoardController {
 
 	@GetMapping("/main/home")
 	public String viewMainPage() {
-		return "/main/home";
+		return "main/home";
 	}
 	
 }

@@ -60,7 +60,7 @@ public class MemberController {
 		ModelAndView view = new ModelAndView("redirect:/member/login");
 		
 		if ( errors.hasErrors() ) {
-			view.setViewName("member/regist");
+			view.setViewName("redirect:/member/regist?error=1");
 			view.addObject(memberVO);
 			return view;
 		}
@@ -73,18 +73,20 @@ public class MemberController {
 		return view;
 	}
 	
-	@PostMapping("/member/check/duplicate")
+	@PostMapping("/member/duplicate")
 	@ResponseBody
 	public Map<String, Object> doCheckDuplicateEmail(@RequestParam String email){
-		
-		Random random = new Random();
+		System.out.println(email);
+		boolean selectCheckEmail = memberService.readOneEmail(email);
 		Map<String, Object> result = new HashMap<>();
-		result.put("status","OK");
-		result.put("duplicated", random.nextBoolean());
+		if (selectCheckEmail) {
+			result.put("status","OK");
+			result.put("duplicated", selectCheckEmail);  // 여기에 select check 한 결과 넣기.
+		}
 		return result;
 	}
 	
-	@PostMapping("/member/check/validate")
+	@PostMapping("/member/validate")
 	@ResponseBody
 	public Map<String, Object> doCheckRegist(@Validated({MemberValidator.Regist.class}) @ModelAttribute MemberVO memberVO, Errors errors, HttpSession session) {
 		Map<String, Object> result = new HashMap<>();
@@ -113,16 +115,26 @@ public class MemberController {
 	
 	@PostMapping("/member/login")
 	public ModelAndView doMemberLoginAction(@Validated({MemberValidator.Login.class}) @ModelAttribute MemberVO memberVO, Errors errors, HttpSession session) {
-		ModelAndView view = new ModelAndView("redirect:/main/home");
+		ModelAndView view = new ModelAndView("/member/login");
 		if ( errors.hasErrors() ) {
-			view.setViewName("member/login");
+			view.setViewName("redirect:/member/login?error=1");
+			view.addObject(memberVO);
+			return view;
+		}		
+		MemberVO param = this.memberService.readOneMember(memberVO);
+		
+		if ( param != null ) {
+			view.setViewName("redirect:/main/home");
+			session.setAttribute("_USER_", param);
+			return view;
+		}
+		else {
 			view.addObject("memberVO", memberVO);
+			view.setViewName("redirect:/member/login?error=1");
 			return view;
 		}
 		
-		MemberVO loginMemberVO = this.memberService.readOneMember(memberVO);
-		session.setAttribute("_USER_", loginMemberVO);
-		return view;
+		
 	}
 	
 }

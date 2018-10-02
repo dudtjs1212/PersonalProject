@@ -1,31 +1,127 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp" />
+ <script type="text/javascript">
+	$().ready(function(){
+		$("#email").blur(function(){
+			$.post("/GameReview/member/duplicate"
+					,{email : $(this).val()}
+					, function(response) {
+						alert(response.status);
+					})
+			/* $.post("/GameReview/member/duplicate", {
+				email : $(this).val()
+			}, function(response) {
+				if (response.possible) {
+					alert(response.data);
+				}
+				else { 
+					$("#email").val("");
+	             	setTimeout( function(){ 
+	                $("#email").focus(); 
+	                  }, 10);
+	            	alert(response.data);
+				}
+			}) */
+		})
+		$("#loginBtn").click(function(){
+			var emailAfter = $(`<div class="error"> E-Mail를 입력해 주세요.</div>`);
+			var passwordAfter = $(`<div class="error"> Password를 입력해 주세요.</div>`);
+			
+			var emailRegexAfter = $(`<div class="error"> E-Mail 형식을 확인해 주세요.</div>`);
+			var emailRegex = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+			
+			if ($("#email").val() == "" && $("#password").val() == "") {
+				$(".error").remove();
+				$("#email").after(emailAfter);
+				$("#password").after(passwordAfter);
+				$("#email").focus(); 
+				return;
+			}
+			else if ($("#email").val() == "") {
+				$(".error").remove();
+				$("#email").after(emailAfter);
+				$("#email").focus(); 
+				return;
+			}
+			else if (!emailRegex.test($("#email").val()) && $("#password").val() == "") {
+            	$(".error").remove();
+				$("#email").after(emailRegexAfter);
+				$("#password").after(passwordAfter);
+               setTimeout( function() { 
+                  $("#email").focus(); 
+                  }, 10);
+               return;
+            }
+            else if ( !emailRegex.test($("#email").val()) ) {
+            	$(".error").remove();
+				$("#email").after(emailRegexAfter);
+               setTimeout( function() { 
+                  $("#email").focus(); 
+                  }, 10);
+               return;
+            }
+			/* var emailRegex = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+            if ( !emailRegex.test($("#email").val()) ) {
+               alert("이메일 형식을 확인해주세요");
+               setTimeout( function() { 
+                  $("#email").focus(); 
+                  }, 10);
+               return;
+            } */
+
+			else if ($("#password").val() == "") {
+				$(".error").remove();
+				$("#password").after(passwordAfter);
+				$("#password").focus(); 
+				return;
+			}
+            
+			$("#memberLoginForm").attr({
+				"method" : "post",
+				"action" : "/GameReview/member/login"
+			}).submit();
+			/* $.post("/GameReview/member/login"
+					, $("#memberLoginForm").serialize()
+					, function(response) {
+						alert("전송");				
+			}); */
+			/* $("#memberLoginForm").attr({
+				"method" : "post",
+				"action" : "/GameReview/member/login"
+			}).submit(); */
+		});
+	});
+	
+</script>
+
 <title>Member Login</title>
-</head>
-<body>
-	<h1> Member Login </h1>
-	<form:form modelAttribute="memberVO" method="POST" action="/GameReview/member/login">
+	<h1> 회원 로그인 </h1>
+		<c:if test= "${param.error eq '1' }">
+			<article>
+				<div class="error"> 
+					ID 또는 Password가 맞지 않습니다.
+				</div>
+			</article>
+		</c:if>
+	<form:form id = "memberLoginForm" modelAttribute="memberVO">
 		<div>
-			<input type="email" name="email" placeholder="Email" value="${memberVO.email}"/>
+			<input type="email" id="email" name="email" placeholder="Email" value="${memberVO.email}"/>
 		</div>
 		<div>
 			<form:errors path="email"/>
 		</div>
 		<div>
-			<input type="password" name="password" placeholder="Password" value="${memberVO.password}" />
+			<input type="password" id="password" name="password" placeholder="Password" value="${memberVO.password}" />
 		</div>
 		<div>
 			<form:errors path="password"/>
-			<form:errors path="name"/>
 		</div>
 		<div>
-			<input type="submit" value="로그인" />
+			<input type="button" id="loginBtn" value="로그인" />
 		</div>
 	</form:form>
-</body>
-</html>
+	<a href="/GameReview/member/regist">회원가입</a>
+<jsp:include page="/WEB-INF/view/common/layout/layout_footer.jsp" />

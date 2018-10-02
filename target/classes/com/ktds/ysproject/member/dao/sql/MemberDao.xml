@@ -42,4 +42,16 @@
 		WHERE	EMAIL = #{email}
 		AND 	PASSWORD = #{password}
 	</select>
+	
+	<select id="selectSaltById" parameterType="string" resultType="string">
+		SELECT	SALT
+		FROM	MEMBER
+		WHERE	EMAIL = #{email}
+	</select>
+	
+	<select id="selectOneEmail" parameterType="string" resultType="_int">
+		SELECT	COUNT(1)
+		FROM	MEMBER
+		WHERE	EMAIL=#{email}
+	</select>
 </mapper>
