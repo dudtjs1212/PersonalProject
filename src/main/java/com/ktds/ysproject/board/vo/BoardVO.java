@@ -1,5 +1,9 @@
 package com.ktds.ysproject.board.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.ktds.ysproject.member.vo.MemberVO;
+
 public class BoardVO {
 
 	private String boardId;
@@ -7,13 +11,17 @@ public class BoardVO {
 	private String content;
 	private String crtDt;
 	private int viewCount;
-	private String writer;
 	private String videoPath;
 	private String posterPath;
 	private int boardDivision;
 	private String urlAddress;
 	private int recommendCount;
+	private String email;
+	private MemberVO memberVO;
 
+	private MultipartFile video;
+	private MultipartFile poster;
+	
 	public String getBoardId() {
 		return boardId;
 	}
@@ -52,14 +60,6 @@ public class BoardVO {
 
 	public void setViewCount(int viewCount) {
 		this.viewCount = viewCount;
-	}
-
-	public String getWriter() {
-		return writer;
-	}
-
-	public void setWriter(String writer) {
-		this.writer = writer;
 	}
 
 	public String getVideoPath() {
@@ -102,4 +102,38 @@ public class BoardVO {
 		this.recommendCount = recommendCount;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public MemberVO getMemberVO() {
+		return memberVO;
+	}
+
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
+	}
+
+	public MultipartFile getVideo() {
+		return video;
+	}
+
+	public void setVideo(MultipartFile video) {
+		this.video = video;
+	}
+
+	public MultipartFile getPoster() {
+		return poster;
+	}
+
+	public void setPoster(MultipartFile poster) {
+		this.poster = poster;
+	}
+
+	
+	
 }

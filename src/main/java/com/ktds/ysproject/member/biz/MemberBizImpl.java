@@ -29,8 +29,10 @@ public class MemberBizImpl implements MemberBiz {
 	@Override
 	public MemberVO readOneMember(MemberVO memberVO) {
 		String salt = this.memberDao.selectSaltById(memberVO.getEmail());
-		String password = this.getHashedPassword(salt, memberVO.getPassword());
-		memberVO.setPassword(password);
+		if ( salt != null ) {
+			String password = this.getHashedPassword(salt, memberVO.getPassword());
+			memberVO.setPassword(password);
+		}
 		
 		MemberVO readMemberVO = new MemberVO();
 		readMemberVO.setEmail(memberVO.getEmail());

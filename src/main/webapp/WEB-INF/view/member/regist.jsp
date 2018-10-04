@@ -5,56 +5,88 @@
 <jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp" /> 
 <script type="text/javascript">
 	$().ready(function(){
-		$("#email").blur( function() {
-	         $.post("/GameReview/member/duplicate", {
-	            "email" : $(this).val()
-	         }, function(response) {
-	            if (response.duplicated) {
-	               alert(response.status);
-	            }
-	            else {
-	               $("#name").focus(); 
-	            }
-	         });               
-	    });
-		$("#registBtn").click(function(){
-			var emailAfter = $(`<div class="error"> ID를 입력해 주세요.</div>`);
-			var nameAfter = $(`<div class="error"> 이름을 입력해 주세요.</div>`);
-			var passwordAfter = $(`<div class="error"> Password를 입력해 주세요.</div>`);
-			var nicknameAfter = $(`<div class="error"> 닉네임을 입력해 주세요.</div>`);
+		var emailAfter = $(`<div class="error"> E-Mail을 입력해 주세요.</div>`);
+		var nameAfter = $(`<div class="error"> 이름을 입력해 주세요.</div>`);
+		var passwordAfter = $(`<div class="error"> Password를 입력해 주세요.</div>`);
+		var nicknameAfter = $(`<div class="error"> 닉네임을 입력해 주세요.</div>`);
+		var emailRegex = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+		var emailRegexAfter = $(`<div class="error"> E-Mail 형식이 맞지 않습니다.</div>`);
+		var passwordRegex = /^(?=.*[a-zA-z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}/;
+		var passwordRegexAter = $(`<div class="error"> 비밀번호는 8글자 이상 20글자 이하 <br/>  대소문자, 숫자, 특수문자를 포함해야 합니다.</div>`);
+		
+		$("#email").after(emailAfter);
+		$("#name").after(nameAfter);
+		$("#nickname").after(nicknameAfter);
+		$("#password").after(passwordAfter);
+		
+		var emailEmpty = false;
+		var nameEmpty = false;
+		var nicknameEmpty = false;
+		var passwordEmpty = false;
+		
+		function EmptyCheck(){
+			emailEmpty = false;
+			nameEmpty = false;
+			nicknameEmpty = false;
+			passwordEmpty = false;
 			
 			if ($("#email").val() == "") {
-				$(".error").remove();
-				$("#email").after(emailAfter);
-				$("#email").focus(); 
-				return;
+				emailEmpty = true;
 			}
-			else if ($("#name").val() == "") {
-				$(".error").remove();
-				$("#name").after(nameAfter);
-				$("#name").focus(); 
-				return;
+			if ($("#name").val() == "") {
+				nameEmpty = true;
 			}
-			else if ($("#nickname").val() == "") {
-				$(".error").remove();
-				$("#nickname").after(nicknameAfter);
-				$("#nickname").focus(); 
-				return;
+			if ($("#nickname").val() == "") {
+				nicknameEmpty = true;
 			}
-			else if ($("#password").val() == "") {
-				$(".error").remove();
-				$("#password").after(passwordAfter);
-				$("#password").focus(); 
-				return;
+			if ($("#password").val() == "") {
+				passwordEmpty = true;
 			}
-			/* var emailRegex = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-            if ( !emailRegex.test($("#email").val()) ) {
-               alert("이메일 형식을 확인해주세요");
-               setTimeout( function() { 
-                  $("#email").focus(); 
-                  }, 10);
-               return;
-            }  */
+		}
+		
+		function errorDivAdd() {
+			EmptyCheck();
+			if (emailEmpty || nameEmpty || nicknameEmpty || passwordEmpty) {
+				$(".error").remove();
+				if (emailEmpty) {
+					$("#email").after(emailAfter);
+				}
+				else {
+					if ( !emailRegex.test($("#email").val()) ) {
+						$("#email").after(emailRegexAfter);
+		            }
+				}
+				if (nameEmpty) {
+					$("#name").after(nameAfter);
+				}
+				if (nicknameEmpty) {
+					$("#nickname").after(nicknameAfter);
+				}
+				if (passwordEmpty) {
+					$("#password").after(passwordAfter);
+				}
+				else {
+					if ( !passwordRegex.test($("#password").val()) ) {
+						$("#password").after(passwordRegexAter);
+			        }
+				}
+			}
+			else {
+				$(".error").remove();
+				if ( !passwordRegex.test($("#password").val()) ) {
+					$("#password").after(passwordRegexAter);
+		        }
+				if ( !emailRegex.test($("#email").val()) ) {
+					$("#email").after(emailRegexAfter);
+	            }
+			}
+				
+		}
+		
+		$("#registBtn").click(function(){
+			errorDivAdd();
+			
+			return;
 			
 			$("#memberRegistForm").attr({
 				"method" : "post",
@@ -62,6 +94,33 @@
 				"enctype": "multipart/form-data"
 			}).submit();
 			
+		});
+		$("#email").blur( function() {
+			errorDivAdd();
+			return;
+			
+	         $.post("/GameReview/member/duplicate", {
+	            "email" : $(this).val()
+	         }, function(response) {
+	            if (response.duplicated) {
+	               alert(response.status);
+	            }
+	            /* else {
+	               $("#name").focus(); 
+	            } */
+	         });               
+	    });
+		$("#name").blur(function(){
+			errorDivAdd();
+			return;
+		});
+		$("#nickname").blur(function(){
+			errorDivAdd();
+			return;
+		});
+		$("#password").blur(function(){
+			errorDivAdd();
+			return;
 		});
 	});
 </script> 

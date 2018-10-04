@@ -3,5 +3,48 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="BoardDao">
+	<insert id="insertOneBoard" parameterType="BoardVO">
+		INSERT	INTO BOARD 	(
+								BOARD_ID
+								, TITLE
+								, CONTENT
+								, CRT_DT
+								, VIEW_COUNT
+								, VIDEO_PATH
+								, POSTER_PATH
+								, BOARD_DIVISION
+								, URL_ADDRESS
+								, RECOMMEND_COUNT
+								, EMAIL
+							)
+		VALUES				(
+								'BD-'|| TO_CHAR(SYSDATE, 'YYYYMMDDHH24') || '-' || LPAD(BOARD_ID_SEQ.NEXTVAL, 6, '0')
+								, #{title}
+								, #{content}
+								, SYSDATE
+								, 0
+								, #{videoPath}
+								, #{posterPath}
+								, 0
+								, #{urlAddress}
+								, 0
+								, #{email}
+							)
+	</insert>
 	
+	<select id="selectOneBoard" parameterType="BoardVO" resultType="BoardVO">
+		SELECT	BOARD_ID
+				, TITLE
+				, CONTENT
+				, CRT_DT
+				, VIEW_COUNT
+				, VIDEO_PATH
+				, POSTER_PATH
+				, BOARD_DIVISION
+				, URL_ADDRESS
+				, RECOMMEND_COUNT
+				, EMAIL
+		FROM	BOARD
+		WHERE	BOARD_ID = #{boardId}
+	</select>  
 </mapper>

@@ -115,7 +115,8 @@ public class MemberController {
 	
 	@PostMapping("/member/login")
 	@ResponseBody
-	public Map<String, Object> doMemberLoginAction(@Validated({MemberValidator.Login.class}) @ModelAttribute MemberVO memberVO, Errors errors, HttpSession session) {
+	public Map<String, Object> doMemberLoginAction(@Validated({MemberValidator.Login.class}) @ModelAttribute MemberVO memberVO, 
+													Errors errors, HttpSession session) {
 		//ModelAndView view = new ModelAndView("/member/login");
 		boolean isBlockUser = memberService.isBlockUser(memberVO.getEmail());
 		Map<String, Object> result = new HashMap<>();

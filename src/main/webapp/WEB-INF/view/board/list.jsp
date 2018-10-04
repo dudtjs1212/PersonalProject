@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	임시 메인 페이지
-	<a href="../board/write"> 글쓰기</a>
+ list page 입니다.
 </body>
 </html>
