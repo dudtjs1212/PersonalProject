@@ -76,11 +76,11 @@ public class MemberController {
 	@PostMapping("/member/duplicate")
 	@ResponseBody
 	public Map<String, Object> doCheckDuplicateEmail(@RequestParam String email){
-		System.out.println(email);
 		boolean selectCheckEmail = memberService.readOneEmail(email);
 		Map<String, Object> result = new HashMap<>();
+		System.out.println(selectCheckEmail);
 		if (selectCheckEmail) {
-			result.put("status","OK");
+			result.put("status","이미 등록된 email 입니다.");
 			result.put("duplicated", selectCheckEmail);  // 여기에 select check 한 결과 넣기.
 		}
 		return result;
@@ -114,9 +114,30 @@ public class MemberController {
 	}
 	
 	@PostMapping("/member/login")
-	public ModelAndView doMemberLoginAction(@Validated({MemberValidator.Login.class}) @ModelAttribute MemberVO memberVO, Errors errors, HttpSession session) {
-		ModelAndView view = new ModelAndView("/member/login");
-		if ( errors.hasErrors() ) {
+	@ResponseBody
+	public Map<String, Object> doMemberLoginAction(@Validated({MemberValidator.Login.class}) @ModelAttribute MemberVO memberVO, Errors errors, HttpSession session) {
+		//ModelAndView view = new ModelAndView("/member/login");
+		boolean isBlockUser = memberService.isBlockUser(memberVO.getEmail());
+		Map<String, Object> result = new HashMap<>();
+		if ( isBlockUser ) {
+			result.put("message","블락유저");
+			result.put("status", isBlockUser);  // 여기에 select check 한 결과 넣기.
+		}
+		else {
+			MemberVO loginMember = memberService.readOneMember(memberVO);
+			if ( loginMember != null ) {
+				session.setAttribute("_USER_", loginMember);
+				result.put("loginStatus", true);
+				result.put("message", "Login 되었습니다.");
+			}
+			else {
+				result.put("loginStatus", false);
+				result.put("message", "Login을 실패하였습니다");
+			}
+		}
+		return result;
+		
+		/*if ( errors.hasErrors() ) {
 			view.setViewName("redirect:/member/login?error=1");
 			view.addObject(memberVO);
 			return view;
@@ -132,7 +153,7 @@ public class MemberController {
 			view.addObject("memberVO", memberVO);
 			view.setViewName("redirect:/member/login?error=1");
 			return view;
-		}
+		}*/
 		
 		
 	}

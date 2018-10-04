@@ -9,4 +9,6 @@ public interface MemberBiz {
 	public MemberVO readOneMember(MemberVO memberVO);
 	
 	public boolean readOneEmail(String email);
+	
+	public boolean isBlockUser(String email);
 }

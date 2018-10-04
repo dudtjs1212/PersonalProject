@@ -109,5 +109,12 @@ public class MemberVO {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
+	
+	@Override
+	public String toString() {
+		String format = "MemberVO [Email : %s, Name : %s, nickname : %s, Password: %s, salt : %s, profileImg : %s , loginFailCount : %d, memberAuthority : %d, loginFailTime : %s]";
+		return String.format(format, this.email, this.name, this.nickname, 
+				this.password, this.salt, this.profileImg, this.loginFailCount, this.memberAuthority, this.loginFailTime);
+	}
 
 }

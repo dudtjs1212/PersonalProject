@@ -54,4 +54,25 @@
 		FROM	MEMBER
 		WHERE	EMAIL=#{email}
 	</select>
+	
+	<select id="isBlockUser" parameterType="string" resultType="_int">
+		SELECT	LOGIN_FAIL_COUNT
+		FROM	MEMBER
+		WHERE	EMAIL=#{email}
+		AND		LOGIN_FAIL_TIME + 1/24 >= SYSDATE
+	</select>
+	
+	<update id="unblockUser" parameterType="string">
+		UPDATE	MEMBER 
+		SET		LOGIN_FAIL_COUNT = 0
+		WHERE	EMAIL = #{email}
+	</update>
+	
+	<update id="increaseLoginFailCount" parameterType="string">
+		UPDATE	MEMBER
+		SET		LOGIN_FAIL_COUNT = LOGIN_FAIL_COUNT + 1
+				, LOGIN_FAIL_TIME = SYSDATE
+		WHERE	EMAIL = #{eamil}
+	</update>
+	
 </mapper>

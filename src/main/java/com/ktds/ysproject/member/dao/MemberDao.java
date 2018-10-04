@@ -12,4 +12,10 @@ public interface MemberDao {
 	
 	public int selectOneEmail(String email);
 	
+	public Integer isBlockUser(String email);
+	
+	public int unblockUser(String email);
+		
+	public int increaseLoginFailCount(String email);
+	
 }

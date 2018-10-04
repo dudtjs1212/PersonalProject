@@ -27,4 +27,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberBiz.readOneEmail(email);
 	}
 
+	@Override
+	public boolean isBlockUser(String email) {
+		return memberBiz.isBlockUser(email);
+	}
+
 }

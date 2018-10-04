@@ -5,28 +5,26 @@
 <jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp" />
  <script type="text/javascript">
 	$().ready(function(){
-		$("#email").blur(function(){
-			$.post("/GameReview/member/duplicate"
-					,{email : $(this).val()}
-					, function(response) {
-						alert(response.status);
-					})
-			/* $.post("/GameReview/member/duplicate", {
-				email : $(this).val()
-			}, function(response) {
-				if (response.possible) {
-					alert(response.data);
-				}
-				else { 
-					$("#email").val("");
-	             	setTimeout( function(){ 
-	                $("#email").focus(); 
-	                  }, 10);
-	            	alert(response.data);
-				}
-			}) */
-		})
 		$("#loginBtn").click(function(){
+			var blockUser = $(`<div class="error"> Password 3회이상 실패하여 1시간 동안 계정이 잠겼습니다. 1시간 이후에 다시 이용 바랍니다.</div>`);
+			var loginFail = $(`<div class="error"> ID 또는 Password가 맞지 않습니다.</div>`);
+			$(".error").remove();
+			$.post("/GameReview/member/login", 
+					$(`#memberLoginForm`).serialize()
+					, function(response) {
+	            if (response.status) {
+	            	$("#email").before(blockUser);
+	            }
+	            else {
+	            	if (response.loginStatus){
+		            	location.href="/GameReivew/main/home"
+		            }
+		            else {
+		            	$("#email").before(loginFail);
+		            }
+	            }
+	            alert(response.message);
+	         });               
 			var emailAfter = $(`<div class="error"> E-Mail를 입력해 주세요.</div>`);
 			var passwordAfter = $(`<div class="error"> Password를 입력해 주세요.</div>`);
 			
@@ -99,7 +97,7 @@
 
 <title>Member Login</title>
 	<h1> 회원 로그인 </h1>
-		<c:if test= "${param.error eq '1' }">
+		<c:if test= "${loginMember.error eq '1' }">
 			<article>
 				<div class="error"> 
 					ID 또는 Password가 맞지 않습니다.

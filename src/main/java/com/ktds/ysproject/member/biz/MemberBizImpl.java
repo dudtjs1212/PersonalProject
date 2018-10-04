@@ -31,14 +31,55 @@ public class MemberBizImpl implements MemberBiz {
 		String salt = this.memberDao.selectSaltById(memberVO.getEmail());
 		String password = this.getHashedPassword(salt, memberVO.getPassword());
 		memberVO.setPassword(password);
-		return memberDao.selectOneMember(memberVO);
+		
+		MemberVO readMemberVO = new MemberVO();
+		readMemberVO.setEmail(memberVO.getEmail());
+		readMemberVO.setPassword(memberVO.getPassword());
+		System.out.println(readMemberVO.toString());
+		MemberVO member = memberDao.selectOneMember(readMemberVO);
+		
+		if ( member == null ) {
+			memberDao.increaseLoginFailCount(memberVO.getEmail());
+		}
+		else {
+			memberDao.unblockUser(readMemberVO.getEmail());
+		}
+		
+		return member;
+		
+		/*if (readMemberVO.getEmail() != null) {
+			isBlockAccount = memberDao.isBlockUser(readMemberVO.getEmail()) >= 3;
+		}
+		
+		if ( !isBlockAccount ) {
+			readMemberVO = memberDao.selectOneMember(memberVO);
+
+			if ( readMemberVO == null ) {
+				memberDao.increaseLoginFailCount(memberVO.getEmail());
+			}
+			else {
+				memberDao.unblockUser(memberVO.getEmail());
+			}
+		}
+		else {
+			readMemberVO = null;
+		}
+		return readMemberVO;*/
+		
 	}
 
 	@Override
 	public boolean readOneEmail(String email) {
 		return memberDao.selectOneEmail(email) > 0;
 	}
-	
-	
+
+	@Override
+	public boolean isBlockUser(String email) {
+		Integer blockUserAccount = memberDao.isBlockUser(email);
+		if (blockUserAccount == null) {
+			blockUserAccount = 0;
+		}
+		return blockUserAccount >= 3;
+	}
 
 }

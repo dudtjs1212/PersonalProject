@@ -34,6 +34,21 @@ public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {
 	public int selectOneEmail(String email) {
 		return getSqlSession().selectOne("MemberDao.selectOneEmail", email);
 	}
+
+	@Override
+	public Integer isBlockUser(String email) {
+		return getSqlSession().selectOne("MemberDao.isBlockUser", email);
+	}
+
+	@Override
+	public int unblockUser(String email) {
+		return getSqlSession().update("MemberDao.unblockUser", email);
+	}
+
+	@Override
+	public int increaseLoginFailCount(String email) {
+		return getSqlSession().update("MemberDao.increaseLoginFailCount", email);
+	}
 	
 	
 }

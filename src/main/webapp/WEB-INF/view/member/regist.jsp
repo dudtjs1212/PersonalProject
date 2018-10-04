@@ -5,6 +5,18 @@
 <jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp" /> 
 <script type="text/javascript">
 	$().ready(function(){
+		$("#email").blur( function() {
+	         $.post("/GameReview/member/duplicate", {
+	            "email" : $(this).val()
+	         }, function(response) {
+	            if (response.duplicated) {
+	               alert(response.status);
+	            }
+	            else {
+	               $("#name").focus(); 
+	            }
+	         });               
+	    });
 		$("#registBtn").click(function(){
 			var emailAfter = $(`<div class="error"> ID를 입력해 주세요.</div>`);
 			var nameAfter = $(`<div class="error"> 이름을 입력해 주세요.</div>`);
