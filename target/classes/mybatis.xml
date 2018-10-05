@@ -8,5 +8,6 @@
 		<typeAlias type="com.ktds.ysproject.member.vo.MemberVO" alias="MemberVO"/>
 		<typeAlias type="com.ktds.ysproject.reply.vo.ReplyVO" alias="ReplyVO"/>
 		<typeAlias type="com.ktds.ysproject.board.vo.BoardVO" alias="BoardVO"/>
+		<typeAlias type="com.ktds.ysproject.board.vo.BoardSearchVO" alias="BoardSearchVO"/>
 	</typeAliases>
 </configuration>

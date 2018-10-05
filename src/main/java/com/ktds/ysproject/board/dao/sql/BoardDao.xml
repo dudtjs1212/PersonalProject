@@ -25,26 +25,110 @@
 								, 0
 								, #{videoPath}
 								, #{posterPath}
-								, 0
+								, 0  
 								, #{urlAddress}
 								, 0
 								, #{email}
 							)
 	</insert>
 	
-	<select id="selectOneBoard" parameterType="BoardVO" resultType="BoardVO">
-		SELECT	BOARD_ID
-				, TITLE
-				, CONTENT
-				, CRT_DT
-				, VIEW_COUNT
-				, VIDEO_PATH
-				, POSTER_PATH
-				, BOARD_DIVISION
-				, URL_ADDRESS
-				, RECOMMEND_COUNT
-				, EMAIL
-		FROM	BOARD
-		WHERE	BOARD_ID = #{boardId}
+	<resultMap type="BoardVO" id="boardResultMap">
+		<id property="boardId" column="BOARD_ID"/>
+		<result property="title" column="TITLE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="crtDt" column="CRT_DT"/>
+		<result property="viewCount" column="VIEW_COUNT"/>
+		<result property="videoPath" column="VIDEO_PATH"/>
+		<result property="posterPath" column="POSTER_PATH"/>
+		<result property="boardDivision" column="BOARD_DIVISION"/>
+		<result property="urlAddress" column="URL_ADDRESS"/>
+		<result property="recommendCount" column="RECOMMEND_COUNT"/>
+		<result property="email" column="EMAIL"/>
+		<association property="memberVO" javaType="MemberVO">
+			<id property="email" column="EMAIL"/>
+			<result property="name" column="NAME"/>
+			<result property="nickname" column="NICKNAME"/>
+			<result property="password" column="PASSWORD"/>
+			<result property="salt" column="SALT"/>
+			<result property="profileImg" column="PROFILE_IMG"/>
+			<result property="loginFailCount" column="LOGIN_FAIL_COUNT"/>
+			<result property="memberAuthority" column="MEMBER_AUTHORITY"/>
+			<result property="loginFailTime" column="LOGIN_FAIL_TIME"/>
+		</association>
+	</resultMap>
+	
+	<select id="selectOneBoard" parameterType="String" resultMap="boardResultMap">
+		SELECT	B.BOARD_ID 
+				, B.TITLE 
+				, B.CONTENT 
+				, B.CRT_DT 
+				, B.VIEW_COUNT 
+				, B.VIDEO_PATH 
+				, B.POSTER_PATH 
+				, B.BOARD_DIVISION 
+				, B.URL_ADDRESS 
+				, B.RECOMMEND_COUNT 
+				, B.EMAIL 
+				, M.NAME 
+				, M.NICKNAME
+				, M.PASSWORD
+				, M.SALT
+				, M.PROFILE_IMG
+				, M.LOGIN_FAIL_COUNT
+				, M.MEMBER_AUTHORITY
+				, M.LOGIN_FAIL_TIME
+		FROM	BOARD B
+				, MEMBER M
+		WHERE	B.BOARD_ID = #{boardId}
+		AND		B.EMAIL = M.EMAIL
 	</select>  
+	
+	<select id="selectAllBoards" parameterType="BoardSearchVO" resultMap="boardResultMap">
+		SELECT	*
+		FROM	(
+					SELECT	A.*
+							,	ROWNUM RNUM
+					FROM	(
+								SELECT	B.BOARD_ID 
+								, B.TITLE 
+								, B.CONTENT 
+								, B.CRT_DT 
+								, B.VIEW_COUNT 
+								, B.VIDEO_PATH 
+								, B.POSTER_PATH 
+								, B.BOARD_DIVISION 
+								, B.URL_ADDRESS 
+								, B.RECOMMEND_COUNT 
+								, B.EMAIL 
+								, M.NAME 
+								, M.NICKNAME
+								, M.PASSWORD
+								, M.SALT
+								, M.PROFILE_IMG
+								, M.LOGIN_FAIL_COUNT
+								, M.MEMBER_AUTHORITY
+								, M.LOGIN_FAIL_TIME
+								FROM 	BOARD B
+										, MEMBER M
+								WHERE B.EMAIL = M.EMAIL
+								<if test="searchKeyword != null and searchKeyword != '' ">
+								AND		B.TITLE	LIKE '%' || #{searchKeyword} || '%'
+								</if>
+								ORDER BY EMAIL DESC
+							) A
+					WHERE	ROWNUM <![CDATA[<=]]> #{endRow}
+				)
+		WHERE	RNUM >= #{startRow}	
+	</select>
+	
+	<select id="selectAllBoardsCount" parameterType="BoardSearchVO" resultType="_int">
+		SELECT	COUNT(1)
+		FROM	BOARD B
+				, MEMBER M
+		WHERE	B.EMAIL = M.EMAIL
+		<if test="searchKeyword != null and searchKeyword != '' ">
+		AND		B.TITLE	LIKE '%' || #{searchKeyword} || '%'
+		</if>
+	</select>
+	
 </mapper>

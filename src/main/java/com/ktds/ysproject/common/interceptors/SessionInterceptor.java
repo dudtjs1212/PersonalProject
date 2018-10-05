@@ -19,7 +19,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		String contextPath = request.getContextPath();
 		if ( session.getAttribute("_USER_") == null ) {
-			response.sendRedirect(contextPath);
+			response.sendRedirect("/GameReview/member/login");
 			return false;
 		}
 		return true;

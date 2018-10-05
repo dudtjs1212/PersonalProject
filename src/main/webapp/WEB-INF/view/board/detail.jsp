@@ -7,8 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	${sessionScope._USER_.nickname} 님 환영합니다.
-	<a href="../board/write"> 글쓰기</a>
-	<a href="../board/list"> 자유게시판</a>
+  ${board.boardId} <br/>
+  <h1>${board.title}</h1> <br/>
+  ${board.content} <br/>
+  ${board.viewCount} <br/>
+  ${board.email} <br/>
 </body>
 </html>
