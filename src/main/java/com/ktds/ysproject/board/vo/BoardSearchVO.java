@@ -4,7 +4,7 @@ import io.github.seccoding.web.pager.annotations.EndRow;
 import io.github.seccoding.web.pager.annotations.StartRow;
 
 public class BoardSearchVO {
-
+ 
 	private int pageNo;
 	@StartRow
 	private int startRow;

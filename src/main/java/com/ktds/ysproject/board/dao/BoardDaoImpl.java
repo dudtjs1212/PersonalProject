@@ -12,7 +12,7 @@ import com.ktds.ysproject.board.vo.BoardVO;
 
 @Repository
 public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao {
-
+ 
 	@Autowired
 	@Override
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
@@ -38,5 +38,17 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao {
 	public int selectAllBoardsCount(BoardSearchVO boardSearchVO) {
 		return getSqlSession().selectOne("BoardDao.selectAllBoardsCount", boardSearchVO);
 	}
+
+	@Override
+	public int updateOneBoard(BoardVO boardVO) {
+		return getSqlSession().update("BoardDao.updateOneBoard", boardVO);
+	}
+
+	@Override
+	public int updateViewCount(String boardId) {
+		return getSqlSession().update("BoardDao.updateViewCount", boardId);
+	}
+	
+	
 
 }

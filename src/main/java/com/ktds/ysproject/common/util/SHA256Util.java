@@ -2,7 +2,7 @@ package com.ktds.ysproject.common.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
-
+ 
 /**
  * SHA-256 암호화
  * 
@@ -10,7 +10,7 @@ import java.util.Random;
  *
  */
 public class SHA256Util {
-
+ 
    /**
     * SHA-256 암호화 함
     * @param source 원본

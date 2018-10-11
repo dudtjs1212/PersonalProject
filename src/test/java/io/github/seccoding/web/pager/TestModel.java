@@ -1,7 +1,7 @@
 package io.github.seccoding.web.pager;
 
 public class TestModel {
-
+  
     private String name;
 
     public TestModel(String name) {

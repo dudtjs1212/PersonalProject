@@ -86,14 +86,14 @@
 		$("#registBtn").click(function(){
 			errorDivAdd();
 			
-			return;
+			
 			
 			$("#memberRegistForm").attr({
 				"method" : "post",
 				"action" : "/GameReview/member/regist",
 				"enctype": "multipart/form-data"
 			}).submit();
-			
+			return;
 		});
 		$("#email").blur( function() {
 			errorDivAdd();

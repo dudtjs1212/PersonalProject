@@ -7,11 +7,13 @@ import com.ktds.ysproject.member.vo.MemberVO;
 import io.github.seccoding.web.pager.explorer.PageExplorer;
 
 public interface BoardService {
-
+ 
 	public boolean createOneBoard(BoardVO boardVO);
 	
-	public BoardVO readOneBoard(String boardId, MemberVO memberVO);
+	public BoardVO readOneBoard(String boardId);
 	
 	public PageExplorer readAllBoards(BoardSearchVO boardSearchVO);
+	
+	public boolean updateOneBoard(BoardVO boardVO);
 	
 }

@@ -8,11 +8,11 @@ import io.github.seccoding.web.pager.Pager;
 import io.github.seccoding.web.pager.decorator.Decorator;
 
 public abstract class PageExplorer {
-
+ 
 	protected boolean isSetData;
 	protected Pager pager;
 	protected Decorator decorator;
-	
+	 
 	protected String formId;
 	protected String link;
 	protected String pageFormat;

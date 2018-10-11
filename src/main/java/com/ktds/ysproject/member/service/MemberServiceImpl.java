@@ -8,7 +8,7 @@ import com.ktds.ysproject.member.vo.MemberVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-
+ 
 	@Autowired
 	private MemberBiz memberBiz;
 	

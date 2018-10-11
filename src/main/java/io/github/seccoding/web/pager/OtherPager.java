@@ -5,7 +5,7 @@ public class OtherPager extends Pager {
 	public OtherPager(int printArticle, int printPage) {
 		super(printArticle, printPage);
 	}
-
+  
 	public OtherPager() {
 		super();
 	}

@@ -1,7 +1,7 @@
 package io.github.seccoding.web.pager.decorator;
 
 public class Decorator {
-
+  
 	public StringBuffer makeForm(String formId, String link) {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<script>");

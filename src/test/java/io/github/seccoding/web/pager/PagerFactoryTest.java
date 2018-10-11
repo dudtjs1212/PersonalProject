@@ -2,7 +2,7 @@ package io.github.seccoding.web.pager;
 
 
 public class PagerFactoryTest {
-
+ 
     public static void main(String[] args) {
         PagerFactoryTest pagerFactoryTest = new PagerFactoryTest();
         pagerFactoryTest.makeOraclePager();

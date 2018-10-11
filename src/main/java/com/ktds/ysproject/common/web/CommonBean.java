@@ -16,4 +16,9 @@ public class CommonBean {
 		return "D:/uploads/videoPath";
 	}
 	
+	@Bean("profileImgPath")
+	public String profileImgPath() {
+		return "D:/uploads/profileImgPath";
+	}
+	
 }

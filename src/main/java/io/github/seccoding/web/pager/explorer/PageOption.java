@@ -2,7 +2,7 @@ package io.github.seccoding.web.pager.explorer;
 
 public class PageOption {
 
-
+  
     private String formId = "searchForm";
 
     private String link = "pageNo";

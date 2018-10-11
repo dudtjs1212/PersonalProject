@@ -6,9 +6,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import com.ktds.ysproject.member.biz.MemberBiz;
+ 
 import com.ktds.ysproject.member.vo.MemberVO;
+
 
 public class SessionInterceptor extends HandlerInterceptorAdapter {
 

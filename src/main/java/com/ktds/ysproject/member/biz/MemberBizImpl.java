@@ -9,7 +9,7 @@ import com.ktds.ysproject.member.vo.MemberVO;
 
 @Component
 public class MemberBizImpl implements MemberBiz {
-
+  
 	@Autowired
 	private MemberDao memberDao;
 	

@@ -12,10 +12,10 @@ import io.github.seccoding.web.pager.Pager;
 import io.github.seccoding.web.pager.PagerFactory;
 import io.github.seccoding.web.pager.explorer.ClassicPageExplorer;
 import io.github.seccoding.web.pager.explorer.PageExplorer;
-
+ 
 @Component
 public class BoardBizImpl implements BoardBiz {
-
+ 
 	@Autowired
 	private BoardDao boardDao;
 	
@@ -25,8 +25,9 @@ public class BoardBizImpl implements BoardBiz {
 	}
 
 	@Override
-	public BoardVO readOneBoard(String email, MemberVO memberVO) {
-		return boardDao.selectOneBoard(email);
+	public BoardVO readOneBoard(String boardId) {
+		this.boardDao.updateViewCount(boardId);
+		return boardDao.selectOneBoard(boardId);
 	}
 
 	@Override
@@ -42,5 +43,10 @@ public class BoardBizImpl implements BoardBiz {
 		pageExplorer.setList( this.boardDao.selectAllBoards(boardSearchVO) );
 		
 		return pageExplorer;
+	}
+
+	@Override
+	public boolean updateOneBoard(BoardVO boardVO) {
+		return boardDao.updateOneBoard(boardVO)>0;
 	}
 }

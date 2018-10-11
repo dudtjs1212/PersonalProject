@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ktds.ysproject.member.validator.MemberValidator;
 
 public class MemberVO {
-
+  
 	@NotEmpty(message="이메일은 필수 입력 값입니다.", groups= {MemberValidator.Login.class,MemberValidator.Regist.class})
 	@Email(message="이메일 형식으로 작성해주세요.", groups= {MemberValidator.Login.class,MemberValidator.Regist.class})
 	private String email;

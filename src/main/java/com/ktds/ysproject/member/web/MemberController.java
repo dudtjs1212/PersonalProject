@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -28,9 +28,13 @@ import com.ktds.ysproject.member.vo.MemberVO;
 
 @Controller
 public class MemberController {
-
+ 
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	@Qualifier("profileImgPath")
+	private String profileImgPath;
 	
 	@GetMapping("/member/regist")
 	public String viewRegistPage() {
@@ -40,22 +44,25 @@ public class MemberController {
 	@PostMapping("/member/regist")
 	public ModelAndView doRegistNewMemberAction(@Validated({MemberValidator.Regist.class}) @ModelAttribute MemberVO memberVO , Errors errors) {
 		MultipartFile file = memberVO.getFile();
-	
-		
-		String fileName = UUID.randomUUID().toString();
-		memberVO.setProfileImg(fileName);
-		
-		File dir = new File("D:/profiles/img");
-		if ( !dir.exists() ) {
-			dir.mkdirs();
+		if ( !file.isEmpty()) {
+			String fileName = UUID.randomUUID().toString();
+			memberVO.setProfileImg(fileName);
+			
+			File dir = new File(profileImgPath);
+			if ( !dir.exists() ) {
+				dir.mkdirs();
+			}
+			
+			File dest = new File(profileImgPath, fileName);
+			
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException | IOException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			}
 		}
-		
-		File dest = new File("D:/profiles/img", fileName);
-		
-		try {
-			file.transferTo(dest);
-		} catch (IllegalStateException | IOException e) {
-			throw new RuntimeException(e.getMessage(), e);
+		else {
+			memberVO.setProfileImg(" ");
 		}
 		ModelAndView view = new ModelAndView("redirect:/member/login");
 		
@@ -78,7 +85,6 @@ public class MemberController {
 	public Map<String, Object> doCheckDuplicateEmail(@RequestParam String email){
 		boolean selectCheckEmail = memberService.readOneEmail(email);
 		Map<String, Object> result = new HashMap<>();
-		System.out.println(selectCheckEmail);
 		if (selectCheckEmail) {
 			result.put("status","이미 등록된 email 입니다.");
 			result.put("duplicated", selectCheckEmail);  // 여기에 select check 한 결과 넣기.

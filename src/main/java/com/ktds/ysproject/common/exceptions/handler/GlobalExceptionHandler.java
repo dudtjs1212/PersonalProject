@@ -12,7 +12,7 @@ import com.ktds.ysproject.common.exceptions.PolicyViolationException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	
+	 
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public String noHandlerFoundExceptionHandler() {
 		return "error/404";

@@ -9,7 +9,7 @@ public class ClassicPageExplorer extends PageExplorer {
 		this.pager = pager;
 		this.decorator = new Decorator();
 	}
-	
+	  
 	protected String generate(StringBuffer pagenation) {
 
         if (pager.nowGroupNumber > 0) {

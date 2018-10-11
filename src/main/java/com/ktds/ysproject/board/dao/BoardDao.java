@@ -6,7 +6,7 @@ import com.ktds.ysproject.board.vo.BoardSearchVO;
 import com.ktds.ysproject.board.vo.BoardVO;
 
 public interface BoardDao {
-
+ 
 	public int insertOneBoard(BoardVO boardVO);
 	
 	public BoardVO selectOneBoard(String boardId);
@@ -14,5 +14,9 @@ public interface BoardDao {
 	public List<BoardVO> selectAllBoards(BoardSearchVO boardSearchVO);
 	
 	public int selectAllBoardsCount(BoardSearchVO boardSearchVO);
+	
+	public int updateOneBoard(BoardVO boardVO);
+	
+	public int updateViewCount(String boardId);
 	
 }

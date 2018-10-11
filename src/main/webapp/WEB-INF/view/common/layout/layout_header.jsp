@@ -11,3 +11,16 @@
 <script src="/GameReview/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 </head>
 <body>
+
+	<div id="wrapper">
+		<header>
+			Header
+			<c:if test="${not empty sessionScope._USER_}">
+				${sessionScope._USER_.name} (${sessionScope._USER_.point} 점)
+			</c:if>
+		</header>
+		<section class="inline">
+			<aside>
+				Aside
+			</aside>
+		<section>

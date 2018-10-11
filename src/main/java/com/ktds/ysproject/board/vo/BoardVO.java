@@ -1,11 +1,14 @@
 package com.ktds.ysproject.board.vo;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ktds.ysproject.member.vo.MemberVO;
+import com.ktds.ysproject.reply.vo.ReplyVO;
 
 public class BoardVO {
-
+ 
 	private String boardId;
 	private String title;
 	private String content;
@@ -18,6 +21,8 @@ public class BoardVO {
 	private int recommendCount;
 	private String email;
 	private MemberVO memberVO;
+	
+	private List<ReplyVO> replyList;
 
 	private MultipartFile video;
 	private MultipartFile poster;
@@ -132,6 +137,14 @@ public class BoardVO {
 
 	public void setPoster(MultipartFile poster) {
 		this.poster = poster;
+	}
+
+	public List<ReplyVO> getReplyList() {
+		return replyList;
+	}
+
+	public void setReplyList(List<ReplyVO> replyList) {
+		this.replyList = replyList;
 	}
 
 	

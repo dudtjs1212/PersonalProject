@@ -25,7 +25,7 @@ import com.ktds.ysproject.board.vo.BoardVO;
 import com.ktds.ysproject.member.vo.MemberVO;
 
 import io.github.seccoding.web.pager.explorer.PageExplorer;
-
+  
 
 @Controller
 public class BoardController {
@@ -40,6 +40,12 @@ public class BoardController {
 	@Autowired
 	@Qualifier("posterUploadPath")
 	private String posterUploadPath;
+	
+	@RequestMapping("/board/list/init")
+	public String viewBoardListPageForInitiate(HttpSession session) {
+		session.removeAttribute("_SEARCH_");
+		return "redirect:/board/list";
+	}
 	
 	@GetMapping("/main/home")
 	public ModelAndView viewMainPage() {
@@ -61,8 +67,6 @@ public class BoardController {
 		MultipartFile video = boardVO.getVideo();
 		MultipartFile poster = boardVO.getPoster();
 		
-		System.out.println("!!!:" + video);
-		System.out.println("!!!:" + poster);
 		
 		if ( !video.isEmpty() ) {
 			String videoPath = UUID.randomUUID().toString();
@@ -148,9 +152,83 @@ public class BoardController {
 	@RequestMapping("/board/detail/{id}")
 	public ModelAndView viewOneBoardDetailPage(@SessionAttribute("_USER_") MemberVO memberVO, @PathVariable String id) {
 		ModelAndView view = new ModelAndView("board/detail");
-		BoardVO board = boardService.readOneBoard(id, memberVO);
+		BoardVO board = boardService.readOneBoard(id);
 		view.addObject("board", board);
 		return view;
 		
+	}
+	
+	@GetMapping("/board/modify/{id}")
+	public ModelAndView viewOneBoardModifyPage(@SessionAttribute("_USER_") MemberVO memberVO, @PathVariable String id, @ModelAttribute BoardVO boardVO) {
+		ModelAndView view = new ModelAndView("board/modify");
+		BoardVO board = boardService.readOneBoard(id);
+		view.addObject("board", board);
+		return view;
+		
+	}
+	
+	@PostMapping("/board/modify")
+	public ModelAndView doBoardmodifyAction(@ModelAttribute BoardVO boardVO, @SessionAttribute("_USER_") MemberVO memberVO) {
+		ModelAndView view = new ModelAndView("redirect:/board/detail/"+boardVO.getBoardId());
+		
+		MultipartFile video = boardVO.getVideo();
+		MultipartFile poster = boardVO.getPoster();
+		
+		
+		if ( !video.isEmpty() ) {
+			String videoPath = UUID.randomUUID().toString();
+			
+			File videodir = new File(videoUploadPath);
+			if ( !videodir.exists() ) {
+				videodir.mkdirs();
+			}
+			
+			File destVideoFile = new File(videoUploadPath, videoPath);
+			
+			try {
+				video.transferTo(destVideoFile);
+				boardVO.setVideoPath(videoPath);
+			} catch (IllegalStateException | IOException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			}
+		}
+		else {
+			boardVO.setVideoPath("");
+		}
+		
+		
+		if ( !poster.isEmpty() ) { 
+			String posterPath = UUID.randomUUID().toString();
+			
+			File posterdir = new File(posterUploadPath);
+			if ( !posterdir.exists() ) {
+				posterdir.mkdirs();
+			}
+			
+			
+			File destposterFile = new File(posterUploadPath, posterPath);
+			
+			try {
+				poster.transferTo(destposterFile);
+				boardVO.setPosterPath(posterPath);
+			} catch (IllegalStateException | IOException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			}
+		}
+		else {
+			boardVO.setPosterPath("");
+		}
+		
+		if ( boardVO.getUrlAddress() == null ) {
+			boardVO.setUrlAddress("");
+		}
+		
+		boolean isSuccess = boardService.updateOneBoard(boardVO);
+		if ( !isSuccess ) {
+			view = new ModelAndView("redirect:/board/modify/"+boardVO.getBoardId());
+			BoardVO board = boardService.readOneBoard(boardVO.getBoardId());
+			view.addObject("board", board);
+		}
+		return view;
 	}
 }

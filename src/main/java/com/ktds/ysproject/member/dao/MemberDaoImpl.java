@@ -9,7 +9,7 @@ import com.ktds.ysproject.member.vo.MemberVO;
 
 @Repository
 public class MemberDaoImpl extends SqlSessionDaoSupport implements MemberDao {
-
+ 
 	@Autowired
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		super.setSqlSessionTemplate(sqlSessionTemplate);

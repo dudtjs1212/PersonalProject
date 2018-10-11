@@ -2,7 +2,7 @@ package io.github.seccoding.web.pager;
 
 import io.github.seccoding.web.pager.annotations.EndRow;
 import io.github.seccoding.web.pager.annotations.StartRow;
-
+ 
 public class TestSearchVO {
 
     private String pageNo;

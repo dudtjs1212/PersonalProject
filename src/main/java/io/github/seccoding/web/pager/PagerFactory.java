@@ -10,7 +10,7 @@ public class PagerFactory {
 			return new OtherPager();
 		}
 	}
-	
+	 
 	public static Pager getPager(boolean isDbOracle, int printArticle, int printPage) {
 		if ( isDbOracle ) {
 			return new OraclePager(printArticle, printPage);

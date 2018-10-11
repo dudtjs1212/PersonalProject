@@ -5,7 +5,7 @@ public class OraclePager extends Pager {
 	public OraclePager(int printArticle, int printPage) {
 		super(printArticle, printPage);
 	}
-
+  
 	public OraclePager() {
 		super();
 	}

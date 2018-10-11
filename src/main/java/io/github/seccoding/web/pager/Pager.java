@@ -12,7 +12,7 @@ public abstract class Pager {
 	
 	public static final boolean ORACLE = true;
 	public static final boolean OTHER = false;
-	
+	  
 	private int totalArticleCount;
 
 	protected int printArticle;

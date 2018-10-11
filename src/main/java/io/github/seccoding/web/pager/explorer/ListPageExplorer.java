@@ -9,7 +9,7 @@ public class ListPageExplorer extends PageExplorer {
 		this.pager = pager;
 		this.decorator = new Decorator();
 	}
-	
+	  
 	public String generate(StringBuffer pagenation) {
 
 		int centerPage = pager.printPage / 2;
