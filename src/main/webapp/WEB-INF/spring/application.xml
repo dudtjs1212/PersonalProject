@@ -19,6 +19,9 @@
 			<mvc:exclude-mapping path="/js/**" />
 			<mvc:exclude-mapping path="/css/**" />
 			<mvc:exclude-mapping path="/img/**" />
+			<mvc:exclude-mapping path="/member/logout"/>
+			<mvc:exclude-mapping path="/member/duplicate" />
+			<mvc:exclude-mapping path="/member/download" />
 			<!-- <mvc:exclude-mapping path="/member/login" />
 			<mvc:exclude-mapping path="/member/regist" />
 			<mvc:exclude-mapping path="/member/duplicate" /> -->
@@ -31,6 +34,8 @@
 			<mvc:exclude-mapping path="/js/**" />
 			<mvc:exclude-mapping path="/css/**" />
 			<mvc:exclude-mapping path="/img/**" />
+			<mvc:exclude-mapping path="/board/poster/download" />
+			<mvc:exclude-mapping path="/board/video/download" />
 			<!-- <mvc:exclude-mapping path="/member/login" />
 			<mvc:exclude-mapping path="/member/regist" />
 			<mvc:exclude-mapping path="/member/duplicate" /> -->

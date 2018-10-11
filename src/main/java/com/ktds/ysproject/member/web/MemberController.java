@@ -2,10 +2,13 @@ package com.ktds.ysproject.member.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +19,14 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ktds.ysproject.common.web.DownloadUtil;
 import com.ktds.ysproject.member.service.MemberService;
 import com.ktds.ysproject.member.validator.MemberValidator;
 import com.ktds.ysproject.member.vo.MemberVO;
@@ -39,6 +44,13 @@ public class MemberController {
 	@GetMapping("/member/regist")
 	public String viewRegistPage() {
 		return "member/regist";
+	}
+	
+	@GetMapping("/member/logout")
+	public String doMemberLogoutAction(HttpSession session) {
+		// Logout
+		session.invalidate();	//session 다 날려버리기
+		return "redirect:/main/home";
 	}
 	
 	@PostMapping("/member/regist")
@@ -164,5 +176,18 @@ public class MemberController {
 		
 		
 	}
+	
+	@GetMapping("/member/download/{fileName}")
+	   public void download(
+	                  @PathVariable String fileName
+	                  ,HttpServletRequest request
+	                  , HttpServletResponse response) {
+	      try {
+	         new DownloadUtil(this.profileImgPath + File.separator + fileName)
+	                     .download(request, response, fileName);
+	      } catch (UnsupportedEncodingException e) {
+	         throw new RuntimeException(e.getMessage(), e);
+	      }
+	   }
 	
 }

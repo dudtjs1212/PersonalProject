@@ -1,5 +1,15 @@
 @charset "UTF-8";
 
+/* h1 {
+	margin-left : 350px;
+} */
+
+
+
+#headerlogin {
+	
+}
+
 .error {
    background-color: rgba(255, 125, 125, 0.7);
    padding: 15px;
@@ -10,7 +20,6 @@
    width : 500px;
    height : 30px;
 }  
-
 
 header {
    width: 100%;
@@ -30,15 +39,15 @@ section.inline > aside {
    padding-bottom: 150px;
    top: 30px;
    bottom: 0px;
-   overflow-y: scroll;
+   /* overflow-y: scroll; */
 }
 
-
+/* 
 section.inline > section {
    position: relative;
    left: 200px;
    padding: 15px;
-}
+} */
 section.inline{
    overflow-x: hidden;
    margin-top: 40px;
@@ -51,3 +60,41 @@ section.inline > section {
    vertical-align: top;
 }
 
+/* input, textarea {
+   padding: 10px;
+   width: 500px;
+   border: 1px solid #bbb;
+   border-radius: 7px;
+} */
+
+#memberLoginForm input ,
+#memberRegistForm input {
+	padding: 10px;
+   	width: 500px;
+  	border: 1px solid #bbb;
+  	border-radius: 7px;
+}
+
+/* .href {
+	margin-left : 350px;
+}
+
+.padded, .listpage {
+	margin-left : 350px;
+} */
+
+#alldiv .listpage > .poster img {
+   width: 130px;
+   height: 110px;
+}
+
+
+#alldiv{
+	margin-left : 350px;
+}
+
+.listpage {
+	background-color: #e9e9e9;
+	border-top: 2px solid rgb(135, 177, 226);
+	border-left: 2px solid rgb(135, 177, 226);
+}

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<title>GameReview</title>
 <jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp" />
 <script type="text/javascript">
 	$().ready(function(){
@@ -49,41 +50,48 @@
 	})
 
 </script>
- 
-  ${board.boardId} <br/>
-  <h1>${board.title}</h1> <br/>
-  ${board.content} <br/>
-  ${board.viewCount} <br/>
-  ${board.email} <br/>
-  
- 	<div>
-		<c:forEach items="${board.replyList}" var="reply">
-			<div class="replyDiv">
-				<div style="margin-left: ${(reply.level-1) * 30}px;">
-					<input type="hidden" id="replyId" class="replyId" name="replyId" value="${reply.replyId}" />
-					<input type="hidden" id="parentReplyId" class="parentReplyId" name="parentReplyId" value="${reply.replyId}"  />
-					<input type="hidden" name="boardId" value="${board.boardId}" />
-					<div>${reply.memberVO.nickname} (${reply.memberVO.email})</div>
-					<div>${reply.crtDt}</div>		
-					<div>${reply.content}</div>		
+	<div id="alldiv">
+		<div class="video" style="display: inline-block;">
+			<video style="width: 70%; height: 40%;"	preload="metadata"
+					autoplay controls="controls" 
+					poster="<c:url value='/board/poster/download/${board.posterPath}' />">
+				<source src="<c:url value='/board/video/download/${board.videoPath}' />" />
+			</video>
+		</div>
+		<h1>${board.title}</h1> <br/>
+		${board.content} <br/>
+		${board.memberVO.nickname} <span style="padding-left: 10px;"> 조회수 : ${board.viewCount} </span>
+	  
+	 	<div style="padding-top:20px;">
+			<c:forEach items="${board.replyList}" var="reply">
+				<div class="replyDiv">
+					<div style="margin-left: ${(reply.level-1) * 30}px;">
+						<input type="hidden" id="replyId" class="replyId" name="replyId" value="${reply.replyId}" />
+						<input type="hidden" id="parentReplyId" class="parentReplyId" name="parentReplyId" value="${reply.replyId}"  />
+						<input type="hidden" name="boardId" value="${board.boardId}" />
+						<div>${reply.memberVO.nickname} (${reply.memberVO.email})</div>
+						<div>${reply.crtDt}</div>		
+						<div>${reply.content}</div>		
+					</div>
+					<div class="cmBtn">
+						<input style= "display:inline-block; margin-left: ${(reply.level-1) * 30}px;" type="button" class="parentReplyBtn" value="답글" />
+						<input type="button" class ="replyDelBtn" value="삭제"/>
+					</div>
 				</div>
-				<div class="cmBtn">
-					<input style= "display:inline-block; margin-left: ${(reply.level-1) * 30}px;" type="button" class="parentReplyBtn" value="답글" />
-					<input type="button" class ="replyDelBtn" value="삭제"/>
-				</div>
-			</div>
-		</c:forEach>
+			</c:forEach>
+		</div>
+		
+		
+		<hr />
+		<form id="parentReplyForm" action="/GameReview/reply/write" method="POST">
+			<input type="hidden" name="boardId" value="${board.boardId}" />
+			<input type="hidden" name="parentReplyId" value="0" />
+			<textarea name="content"></textarea>
+			<input style= "display:inline-block;" type="submit" value="등록"/>
+		</form>
+		<div class="href">
+			<a href="<c:url value='/board/modify/${board.boardId}'/>">수정</a>
+			<a href="/GameReview/board/list">목록</a>
+		</div>
 	</div>
-	
-	
-	<hr />
-	<form id="parentReplyForm" action="/GameReview/reply/write" method="POST">
-		<input type="hidden" name="boardId" value="${board.boardId}" />
-		<input type="hidden" name="parentReplyId" value="0" />
-		<textarea name="content"></textarea>
-		<input style= "display:inline-block;" type="submit" value="등록"/>
-	</form>
-  
-  <a href="<c:url value='/board/modify/${board.boardId}'/>">수정</a>
-  <a href="/GameReview/board/list">목록</a>
 <jsp:include page="/WEB-INF/view/common/layout/layout_footer.jsp" />

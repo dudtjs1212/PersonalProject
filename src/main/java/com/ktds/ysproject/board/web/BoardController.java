@@ -2,9 +2,11 @@ package com.ktds.ysproject.board.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ktds.ysproject.board.service.BoardService;
 import com.ktds.ysproject.board.vo.BoardSearchVO;
 import com.ktds.ysproject.board.vo.BoardVO;
+import com.ktds.ysproject.common.web.DownloadUtil;
 import com.ktds.ysproject.member.vo.MemberVO;
 
 import io.github.seccoding.web.pager.explorer.PageExplorer;
@@ -230,5 +233,31 @@ public class BoardController {
 			view.addObject("board", board);
 		}
 		return view;
+	}
+	
+	@GetMapping("/board/video/download/{fileName}")
+	public void videodownload(
+                  @PathVariable String fileName
+                  ,HttpServletRequest request
+                  , HttpServletResponse response) {
+		try {
+		   new DownloadUtil(this.videoUploadPath + File.separator + fileName)
+		               .download(request, response, fileName);
+		} catch (UnsupportedEncodingException e) {
+		   throw new RuntimeException(e.getMessage(), e);
+		}
+	}
+	
+	@GetMapping("/board/poster/download/{fileName}")
+	public void posterdownload(
+                  @PathVariable String fileName
+                  ,HttpServletRequest request
+                  , HttpServletResponse response) {
+		try {
+		   new DownloadUtil(this.posterUploadPath + File.separator + fileName)
+		               .download(request, response, fileName);
+		} catch (UnsupportedEncodingException e) {
+		   throw new RuntimeException(e.getMessage(), e);
+		}
 	}
 }

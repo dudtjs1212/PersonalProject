@@ -6,18 +6,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>GameReview</title>
 <link rel="stylesheet" type="text/css" href="/GameReview/css/layout.css"/>
 <script src="/GameReview/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 </head>
 <body>
-
+	
 	<div id="wrapper">
 		<header>
-			Header
-			<c:if test="${not empty sessionScope._USER_}">
-				${sessionScope._USER_.name} (${sessionScope._USER_.point} 점)
-			</c:if>
+			<!-- <div style="width:100%; height:120px; position:absolute;">
+				<a href="/GameReview/main/home">
+					<img style="width:100%; height:30%" src="/GameReview/img/MainTopImg.gif"/>
+				</a>
+			</div> -->
+			<div id="headerlogin">
+				<c:choose>
+					<c:when test="${not empty sessionScope._USER_}">
+						${sessionScope._USER_.nickname} 님 환영합니다.
+						<a id="logoutBtn" href="/GameReview/member/logout">로그아웃</a>
+					</c:when>
+					<c:otherwise>
+						로그인이 필요합니다. 
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</header>
 		<section class="inline">
 			<aside>

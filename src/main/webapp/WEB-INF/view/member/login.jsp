@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<title>Member Login</title>
 <jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp" />
  <script type="text/javascript">
 	$().ready(function(){
@@ -102,32 +103,34 @@
 	});
 	
 </script>
-
-<title>Member Login</title>
-	<h1> 회원 로그인 </h1>
-		<c:if test= "${loginMember.error eq '1' }">
-			<article>
-				<div class="error"> 
-					ID 또는 Password가 맞지 않습니다.
-				</div>
-			</article>
-		</c:if>
-	<form:form id = "memberLoginForm" modelAttribute="memberVO">
-		<div>
-			<input type="email" id="email" name="email" placeholder="Email" value="${memberVO.email}"/>
+	<div id="alldiv">
+		<h1> 회원 로그인 </h1>
+			<c:if test= "${loginMember.error eq '1' }">
+				<article>
+					<div class="error"> 
+						ID 또는 Password가 맞지 않습니다.
+					</div>
+				</article>
+			</c:if>
+		<form:form id = "memberLoginForm" modelAttribute="memberVO">
+			<div>
+				<input type="email" id="email" name="email" placeholder="Email" value="${memberVO.email}"/>
+			</div>
+			<div>
+				<form:errors path="email"/>
+			</div>
+			<div>
+				<input type="password" id="password" name="password" placeholder="Password" value="${memberVO.password}" />
+			</div>
+			<div>
+				<form:errors path="password"/>
+			</div>
+			<div>
+				<input type="button" id="loginBtn" value="로그인" />
+			</div>
+		</form:form>
+		<div class="href">
+			<a href="/GameReview/member/regist">회원가입</a>
 		</div>
-		<div>
-			<form:errors path="email"/>
-		</div>
-		<div>
-			<input type="password" id="password" name="password" placeholder="Password" value="${memberVO.password}" />
-		</div>
-		<div>
-			<form:errors path="password"/>
-		</div>
-		<div>
-			<input type="button" id="loginBtn" value="로그인" />
-		</div>
-	</form:form>
-	<a href="/GameReview/member/regist">회원가입</a>
+	</div>
 <jsp:include page="/WEB-INF/view/common/layout/layout_footer.jsp" />
