@@ -51,13 +51,15 @@
 
 </script>
 	<div id="alldiv">
-		<div class="video" style="display: inline-block;">
-			<video style="width: 70%; height: 40%;"	preload="metadata"
-					autoplay controls="controls" 
-					poster="<c:url value='/board/poster/download/${board.posterPath}' />">
-				<source src="<c:url value='/board/video/download/${board.videoPath}' />" />
-			</video>
-		</div>
+		<c:if test="${not empty board.videoPath}">
+			<div class="video" style="display: inline-block;">
+				<video style="width: 70%; height: 40%;"	preload="metadata"
+						autoplay controls="controls" 
+						poster="<c:url value='/board/poster/download/${board.posterPath}' />">
+					<source src="<c:url value='/board/video/download/${board.videoPath}' />" />
+				</video>
+			</div>
+		</c:if>
 		<h1>${board.title}</h1> <br/>
 		${board.content} <br/>
 		${board.memberVO.nickname} <span style="padding-left: 10px;"> 조회수 : ${board.viewCount} </span>

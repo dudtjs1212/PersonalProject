@@ -19,6 +19,13 @@
 					<img style="width:100%; height:30%" src="/GameReview/img/MainTopImg.gif"/>
 				</a>
 			</div> -->
+			<div id="menu">
+				<li style="display:inline-block">1</li>
+				<li style="display:inline-block">2</li>
+				<li style="display:inline-block">3</li>
+				<li style="display:inline-block">4</li>
+				<li style="display:inline-block">5</li>
+			</div>
 			<div id="headerlogin">
 				<c:choose>
 					<c:when test="${not empty sessionScope._USER_}">

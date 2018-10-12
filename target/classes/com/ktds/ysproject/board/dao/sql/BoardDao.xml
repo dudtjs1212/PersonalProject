@@ -114,7 +114,7 @@
 								<if test="searchKeyword != null and searchKeyword != '' ">
 								AND		B.TITLE	LIKE '%' || #{searchKeyword} || '%'
 								</if>
-								ORDER BY EMAIL DESC
+								ORDER BY B.CRT_DT DESC
 							) A
 					WHERE	ROWNUM <![CDATA[<=]]> #{endRow}
 				)

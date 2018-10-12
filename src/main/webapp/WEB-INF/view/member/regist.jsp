@@ -15,23 +15,28 @@
 		var passwordRegex = /^(?=.*[a-zA-z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}/;
 		var passwordRegexAter = $(`<div class="error"> 비밀번호는 8글자 이상 20글자 이하 <br/>  대소문자, 숫자, 특수문자를 포함해야 합니다.</div>`);
 		var emailRegexboolAfter = $(`<div class="error"> E-Mail 이미 존재합니다.</div>`);
+		var passwordConfirmAfter = $(`<div class="error"> 비밀번호를 확인해 주세요. </div>`);
+		
 		
 		$("#email").after(emailAfter);
 		$("#name").after(nameAfter);
 		$("#nickname").after(nicknameAfter);
 		$("#password").after(passwordAfter); 
+		$("#passwordConfirm").after(passwordConfirmAfter);
 		
 		var emailEmpty = false;
 		var nameEmpty = false;
 		var nicknameEmpty = false;
 		var passwordEmpty = false;
 		var emailRegexbool = false;
+		var passwordConfirmEmpty = false;
 		
 		function EmptyCheck(){
 			emailEmpty = false;
 			nameEmpty = false;
 			nicknameEmpty = false;
 			passwordEmpty = false;
+			passwordConfirmEmpty = false;
 			
 			if ($("#email").val() == "") {
 				emailEmpty = true;
@@ -45,12 +50,16 @@
 			if ($("#password").val() == "") {
 				passwordEmpty = true;
 			}
+			if ($("#passwordConfirm").val() == "") {
+				passwordConfirmEmpty = true;
+			}
 		}
 		
 		function errorDivAdd() {
 			EmptyCheck();
 			duplicate();
-			if (emailEmpty || nameEmpty || nicknameEmpty || passwordEmpty) {
+			var result = false;
+			if (emailEmpty || nameEmpty || nicknameEmpty || passwordEmpty || passwordConfirmEmpty) {
 				$(".error").remove();
 				if (emailEmpty) {
 					$("#email").after(emailAfter);
@@ -79,21 +88,38 @@
 						$("#password").after(passwordRegexAter);
 			        }
 				}
+				if (passwordConfirmEmpty) {
+					$("#passwordConfirm").after(passwordConfirmAfter);
+				}
+				else {
+					if ( $("#password").val() != $("#passwordConfirm").val() ) {
+						$("#passwordConfirm").after(passwordConfirmAfter);
+					}
+				}
+				result = true;
 			}
 			else {
 				$(".error").remove();
 				if ( !passwordRegex.test($("#password").val()) ) {
 					$("#password").after(passwordRegexAter);
+					result = true;
 		        }
 				if ( !emailRegex.test($("#email").val()) ) {
 					$("#email").after(emailRegexAfter);
+					result = true;
 	            }
 				else {
 					if ( emailRegexbool ) {
 						$("#email").after(emailRegexboolAfter);
+						result = true;
 					}
 				}
+				if ( $("#password").val() != $("#passwordConfirm").val() ) {
+					$("#passwordConfirm").after(passwordConfirmAfter);
+					result = true;
+				}
 			}
+			return result;
 				
 		}
 		
@@ -111,7 +137,9 @@
 		}
 		
 		$("#registBtn").click(function(){
-			errorDivAdd();
+			if ( errorDivAdd() ) {
+				return;
+			}
 			if ( emailRegexbool ) {
 				return;
 			}
@@ -134,6 +162,14 @@
 			return;
 		});
 		$("#password").blur(function(){
+			errorDivAdd();
+			return;
+		});
+		$("#password").blur(function(){
+			errorDivAdd();
+			return;
+		});
+		$("#passwordConfirm").blur(function(){
 			errorDivAdd();
 			return;
 		});
@@ -172,10 +208,17 @@
 				<input type="password" id="password" name="password" placeholder="PASSWORD" />
 			</div>
 			<div>
+				<input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="PASSWORD CONFIRM"/>
+			</div>
+			<div>
 				<form:errors path="password"/>
 			</div>
 			<div>
 				<input type="file" id="file" name="file" placeholder="PICTURE" accept=".gif, .jpg, .jpeg, .png"/>
+			</div>
+			<div>
+				일반 사용자<input style="width:40px;" type="radio" id="normalCheck" name="memberAuthority" value="2" checked/>
+				Review 사용자<input style="width:40px;" type="radio" id="reviewCheck" name="memberAuthority" value="1"/>
 			</div>
 			<div>
 				<input type="button" id="registBtn" value="등록"/>

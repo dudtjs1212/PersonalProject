@@ -1,15 +1,5 @@
 @charset "UTF-8";
 
-/* h1 {
-	margin-left : 350px;
-} */
-
-
-
-#headerlogin {
-	
-}
-
 .error {
    background-color: rgba(255, 125, 125, 0.7);
    padding: 15px;
@@ -21,14 +11,26 @@
    height : 30px;
 }  
 
+
+
 header {
    width: 100%;
-   height: 30px;
-   background-color: #ff6060;
+   height: 80px;
+   background-color: #50bcdf;
    position: fixed;
    top: 0px;
    left: 0px; 
    z-index: 1;
+}
+
+#menu {
+	height:59px;
+}
+
+#headerlogin {
+	background-color: #cfedee;
+	bottom:0px;
+	text-align: right;
 }
 
 section.inline > aside {
@@ -75,6 +77,10 @@ section.inline > section {
   	border-radius: 7px;
 }
 
+#memberRegistForm #normalCheck, #memberRegistForm #reviewCheck {
+	width:10px;
+}
+
 /* .href {
 	margin-left : 350px;
 }
@@ -98,3 +104,4 @@ section.inline > section {
 	border-top: 2px solid rgb(135, 177, 226);
 	border-left: 2px solid rgb(135, 177, 226);
 }
+

@@ -2,6 +2,8 @@ package com.ktds.ysproject.board.vo;
 
 import java.util.List;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ktds.ysproject.member.vo.MemberVO;
@@ -10,7 +12,9 @@ import com.ktds.ysproject.reply.vo.ReplyVO;
 public class BoardVO {
  
 	private String boardId;
+	@NotEmpty(message="제목은 필수 입력 값입니다.")
 	private String title;
+	@NotEmpty(message="내용은 필수 입력 값입니다.")
 	private String content;
 	private String crtDt;
 	private int viewCount;
@@ -145,6 +149,15 @@ public class BoardVO {
 
 	public void setReplyList(List<ReplyVO> replyList) {
 		this.replyList = replyList;
+	}
+
+	@Override
+	public String toString() {
+		return "BoardVO [boardId=" + boardId + ", title=" + title + ", content=" + content + ", crtDt=" + crtDt
+				+ ", viewCount=" + viewCount + ", videoPath=" + videoPath + ", posterPath=" + posterPath
+				+ ", boardDivision=" + boardDivision + ", urlAddress=" + urlAddress + ", recommendCount="
+				+ recommendCount + ", email=" + email + ", memberVO=" + memberVO + ", replyList=" + replyList
+				+ ", video=" + video + ", poster=" + poster + "]";
 	}
 
 	

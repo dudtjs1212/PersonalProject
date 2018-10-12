@@ -8,9 +8,12 @@
 		<c:forEach items="${boardList}" var="board">
 			<div class="listpage">
 				<a style="display: inline-block;" href="<c:url value='/board/detail/${board.boardId}'/>">
-				<div class="poster" style="display: inline-block;">
-					<img style="width: 150px; height: 130px;" src="<c:url value='/board/poster/download/${board.posterPath}'/>"/>
-				</div></a>
+					<c:if test="${not empty board.posterPath}">
+						<div class="poster" style="display: inline-block;">
+							<img style="width: 150px; height: 130px;" src="<c:url value='/board/poster/download/${board.posterPath}'/>"/>
+						</div>
+					</c:if>
+				</a>
 				<div class="titlediv" style="display: inline-block; width:850px; height: 130px;">
 					<a style="display: inline-block; margin-top:5px;" href="<c:url value='/board/detail/${board.boardId}'/>">
 					<h2 style="display: inline-block; padding-left: 10px; margin-top:5px; ">${board.title} </h2></a>
@@ -35,6 +38,7 @@
 	     	</form>
 	     </div>
 	     <div class="href">
+	     	<a href="../board/write"> 글쓰기</a>
 	     	<a href="/GameReview/main/home">메인 화면</a>
 	     </div>
 	</div>
