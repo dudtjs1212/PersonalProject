@@ -10,16 +10,25 @@
 				<input type="hidden" id="boardId" name="boardId" value="${board.boardId}"/>
 			</div>
 			<div>
+				<input type="hidden" id="videoPathaa" name="videoPath" value="${board.videoPath}"/>
+			</div>
+			<div>
+				<input type="hidden" id="posterPathaa" name="posterPath" value="${board.posterPath}"/>
+			</div>
+			<div>
 				<input type="text" id="title" name="title" value="${board.title}"/>
 			</div>
 			<div>
 				<input type="text" id="content" name ="content" value="${board.content}" />
 			</div>
 			<div>
-				<input type="file" id="videoPath" name="video" accept=".mp4, .avi"/>
+				<h2> 동영상 및 포스터 이미지 변경을 원하시면 파일을 다시 등록해 주시기 바랍니다. </h2>
 			</div>
 			<div>
-				<input type="file" id="posterPath" name="poster" accept=".jpg, .jpeg, .png, .gif"/>
+				<input type="file" id="videoPath" name="video" accept=".mp4, .avi" value="${board.video}"/>
+			</div>
+			<div>
+				<input type="file" id="posterPath" name="poster" accept=".jpg, .jpeg, .png, .gif" value="${board.poster}"/>
 			</div>
 			<div>
 				<input type="submit" id="modifyBtn" value="수정" />

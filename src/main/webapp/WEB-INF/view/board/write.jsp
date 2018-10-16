@@ -10,6 +10,7 @@
 	<div id="alldiv">
 		<h1>Board Write</h1>
 		<form:form id="boardCreateForm" modelAttribute="boardVO" method="post" action="/GameReview/board/write" enctype="multipart/form-data" >
+			<input type="hidden" id="boardDivision" name="boardDivision" value="${boardDivision}"/>
 			<div>
 				<input type="text" id="title" name="title" placeholder="제목을 입력해 주세요."/>
 			</div>

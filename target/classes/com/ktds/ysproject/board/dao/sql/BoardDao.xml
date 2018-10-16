@@ -25,7 +25,7 @@
 								, 0
 								, #{videoPath}
 								, #{posterPath}
-								, 0  
+								, #{boardDivision}
 								, #{urlAddress}
 								, 0
 								, #{email}
@@ -111,6 +111,7 @@
 								FROM 	BOARD B
 										, MEMBER M
 								WHERE B.EMAIL = M.EMAIL
+								AND B.BOARD_DIVISION = #{boardDivision}
 								<if test="searchKeyword != null and searchKeyword != '' ">
 								AND		B.TITLE	LIKE '%' || #{searchKeyword} || '%'
 								</if>
@@ -126,6 +127,7 @@
 		FROM	BOARD B
 				, MEMBER M
 		WHERE	B.EMAIL = M.EMAIL
+		AND B.BOARD_DIVISION = #{boardDivision}
 		<if test="searchKeyword != null and searchKeyword != '' ">
 		AND		B.TITLE	LIKE '%' || #{searchKeyword} || '%'
 		</if>

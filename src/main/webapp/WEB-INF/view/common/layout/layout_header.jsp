@@ -14,23 +14,26 @@
 	
 	<div id="wrapper">
 		<header>
-			<!-- <div style="width:100%; height:120px; position:absolute;">
+			  <div style="width:400px; height:124px; position:absolute;">
 				<a href="/GameReview/main/home">
-					<img style="width:100%; height:30%" src="/GameReview/img/MainTopImg.gif"/>
+					<img style="width:400px; height:124px" src="/GameReview/img/GameReviews2.jpg"/>
 				</a>
-			</div> -->
+			  </div> 
+			
 			<div id="menu">
-				<li style="display:inline-block">1</li>
-				<li style="display:inline-block">2</li>
-				<li style="display:inline-block">3</li>
-				<li style="display:inline-block">4</li>
-				<li style="display:inline-block">5</li>
+				<ul>
+					<li><a href="/GameReview/board/list/0"> 공지사항</a></li>
+					<li><a href="/GameReview/board/list/1"> Mobile Review</a></li>
+					<li><a href="/GameReview/board/list/2"> PlayStation Review</a></li>
+					<li><a href="/GameReview/board/list/3"> PC Game Review</a></li>
+					<li><a href="/GameReview/board/list/4"> 자유 게시판</a></li>
+				</ul>	
 			</div>
 			<div id="headerlogin">
 				<c:choose>
 					<c:when test="${not empty sessionScope._USER_}">
 						${sessionScope._USER_.nickname} 님 환영합니다.
-						<a id="logoutBtn" href="/GameReview/member/logout">로그아웃</a>
+						<a id="logoutBtn" href="/GameReview/member/logout2">로그아웃</a>
 					</c:when>
 					<c:otherwise>
 						로그인이 필요합니다. 

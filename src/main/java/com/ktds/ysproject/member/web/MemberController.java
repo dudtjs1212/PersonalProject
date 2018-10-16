@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ktds.ysproject.User;
 import com.ktds.ysproject.common.web.DownloadUtil;
 import com.ktds.ysproject.member.service.MemberService;
 import com.ktds.ysproject.member.validator.MemberValidator;
@@ -131,14 +133,28 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	@PostMapping("/member/login")
+	@GetMapping("/member/loginSuccess")
 	@ResponseBody
 	public Map<String, Object> doMemberLoginAction(@Validated({MemberValidator.Login.class}) @ModelAttribute MemberVO memberVO, 
 													Errors errors, HttpSession session) {
 		//ModelAndView view = new ModelAndView("/member/login");
-		boolean isBlockUser = memberService.isBlockUser(memberVO.getEmail());
+		
+		//boolean isBlockUser = memberService.isBlockUser(memberVO.getEmail());
 		Map<String, Object> result = new HashMap<>();
-		if ( isBlockUser ) {
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getDetails();
+		
+		MemberVO loginMember = memberService.readOneMember(memberVO);
+		loginMember.setEmail(user.getEmail());
+		loginMember.setPassword(user.getPassword());
+		result.put("loginStatus", false);
+		if ( loginMember != null ) {
+			session.setAttribute("_TOKEN_", loginMember);
+			result.put("loginStatus", true);
+			result.put("message", "Login 되었습니다.");
+		}
+		
+		/*if ( isBlockUser ) {
 			result.put("message","블락유저");
 			result.put("status", isBlockUser);  // 여기에 select check 한 결과 넣기.
 		}
@@ -153,7 +169,7 @@ public class MemberController {
 				result.put("loginStatus", false);
 				result.put("message", "Login을 실패하였습니다");
 			}
-		}
+		}*/
 		return result;
 		
 		/*if ( errors.hasErrors() ) {

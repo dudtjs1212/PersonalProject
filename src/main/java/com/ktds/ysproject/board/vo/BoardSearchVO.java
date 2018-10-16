@@ -12,6 +12,16 @@ public class BoardSearchVO {
 	private int endRow;
 
 	private String searchKeyword;
+	
+	private int boardDivision;
+
+	public int getBoardDivision() {
+		return boardDivision;
+	}
+
+	public void setBoardDivision(int boardDivision) {
+		this.boardDivision = boardDivision;
+	}
 
 	public int getPageNo() {
 		return pageNo;

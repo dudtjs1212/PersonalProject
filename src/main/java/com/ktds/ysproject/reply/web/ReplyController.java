@@ -21,7 +21,6 @@ public class ReplyController {
 	
 	@PostMapping("/reply/write")
 	public String doReplyWriteAction(@ModelAttribute ReplyVO replyVO, @SessionAttribute("_USER_") MemberVO memberVO) {
-		System.out.println("sdvsdvsdv"+replyVO.toString());
 		XssFilter xssFilter = XssFilter.getInstance("lucy-xss-superset.xml");
 		replyVO.setContent(xssFilter.doFilter(replyVO.getContent()));
 		

@@ -24,6 +24,15 @@ public class BoardVO {
 	private String urlAddress;
 	private int recommendCount;
 	private String email;
+	private String token;
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	private MemberVO memberVO;
 	
 	private List<ReplyVO> replyList;

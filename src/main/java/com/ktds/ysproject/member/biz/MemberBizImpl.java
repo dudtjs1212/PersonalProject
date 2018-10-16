@@ -37,15 +37,14 @@ public class MemberBizImpl implements MemberBiz {
 		MemberVO readMemberVO = new MemberVO();
 		readMemberVO.setEmail(memberVO.getEmail());
 		readMemberVO.setPassword(memberVO.getPassword());
-		System.out.println(readMemberVO.toString());
 		MemberVO member = memberDao.selectOneMember(readMemberVO);
 		
-		if ( member == null ) {
+		/*if ( member == null ) {
 			memberDao.increaseLoginFailCount(memberVO.getEmail());
 		}
 		else {
 			memberDao.unblockUser(readMemberVO.getEmail());
-		}
+		}*/
 		
 		return member;
 		
@@ -82,6 +81,16 @@ public class MemberBizImpl implements MemberBiz {
 			blockUserAccount = 0;
 		}
 		return blockUserAccount >= 3;
+	}
+
+	@Override
+	public boolean increaseLoginFailCount(String email) {
+		return memberDao.increaseLoginFailCount(email) > 0;
+	}
+
+	@Override
+	public boolean unblockUser(String email) {
+		return memberDao.unblockUser(email) > 0;
 	}
 
 }

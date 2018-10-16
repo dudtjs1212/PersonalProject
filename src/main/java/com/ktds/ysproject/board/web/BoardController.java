@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +28,7 @@ import com.ktds.ysproject.board.vo.BoardSearchVO;
 import com.ktds.ysproject.board.vo.BoardVO;
 import com.ktds.ysproject.common.web.DownloadUtil;
 import com.ktds.ysproject.member.vo.MemberVO;
+import com.nhncorp.lucy.security.xss.XssFilter;
 
 import io.github.seccoding.web.pager.explorer.PageExplorer;
   
@@ -61,14 +61,20 @@ public class BoardController {
 		return view;
 	}
 	
-	@GetMapping("/board/write")
-	public String viewCreateOneBoardPage() {
-		return "board/write";
+	@GetMapping("/board/write/{boardDivision}")
+	public ModelAndView viewCreateOneBoardPage(@PathVariable int boardDivision) {
+		ModelAndView view = new ModelAndView("board/write");
+		view.addObject("boardDivision", boardDivision);
+		return view;
 	}
 	
 	@PostMapping("/board/write")
 	public ModelAndView doBoardWriteAction(@Valid @ModelAttribute BoardVO boardVO, Errors errors, @SessionAttribute("_USER_") MemberVO memberVO) {
-		ModelAndView view = new ModelAndView("redirect:/board/list");
+		ModelAndView view = new ModelAndView("redirect:/board/list/" + boardVO.getBoardDivision());
+		
+		XssFilter xssFilter = XssFilter.getInstance("lucy-xss-superset.xml");
+		boardVO.setContent(xssFilter.doFilter(boardVO.getTitle()));
+		boardVO.setContent(xssFilter.doFilter(boardVO.getContent()));
 		
 		MultipartFile video = boardVO.getVideo();
 		MultipartFile poster = boardVO.getPoster();
@@ -123,19 +129,18 @@ public class BoardController {
 			boardVO.setUrlAddress("");
 		}
 		if ( errors.hasErrors() ) {
-			System.out.println("!!!!" +boardVO.toString());
-			view.setViewName("board/write");
+			view.setViewName("board/write/" + boardVO.getBoardDivision());
 			view.addObject("boardVO", boardVO);
 			return view;
 		}
-		
+		System.out.println("boardVO" + boardVO.getBoardDivision());
 		boardService.createOneBoard(boardVO);
 		
 		return view;
 	}
 	
-	@RequestMapping("/board/list")
-	public ModelAndView viewBoardListPage(@ModelAttribute BoardSearchVO boardSearchVO, HttpServletRequest request, HttpSession session) {
+	@RequestMapping("/board/list/{boardDivision}")
+	public ModelAndView viewBoardListPage(@PathVariable int boardDivision, @ModelAttribute BoardSearchVO boardSearchVO, HttpServletRequest request, HttpSession session) {
 		
 		// 전체 검색 or 상세 -> 목록 or 글쓰기
 		if ( boardSearchVO.getSearchKeyword() == null ) {
@@ -146,16 +151,20 @@ public class BoardController {
 			}
 		}
 		
+		boardSearchVO.setBoardDivision(boardDivision);
+		
 		//html태그, 게시글, 페이지정보
 		PageExplorer pageExplorer = this.boardService.readAllBoards(boardSearchVO);
+		
 		for ( Object boardVO : pageExplorer.getList() ) {
 			BoardVO convertVO = (BoardVO) boardVO;
 		}
 		
-		
 		session.setAttribute("_SEARCH_", boardSearchVO);
 		
+		
 		ModelAndView view = new ModelAndView("/board/list");
+		view.addObject("boardDivision", boardSearchVO.getBoardDivision());
 		view.addObject("boardList", pageExplorer.getList());
 		view.addObject("pagenation", pageExplorer.make());
 		view.addObject("boardSearchVO", boardSearchVO);
@@ -174,6 +183,7 @@ public class BoardController {
 	@GetMapping("/board/modify/{id}")
 	public ModelAndView viewOneBoardModifyPage(@SessionAttribute("_USER_") MemberVO memberVO, @PathVariable String id, @ModelAttribute BoardVO boardVO) {
 		ModelAndView view = new ModelAndView("board/modify");
+		
 		BoardVO board = boardService.readOneBoard(id);
 		view.addObject("board", board);
 		return view;
@@ -184,9 +194,12 @@ public class BoardController {
 	public ModelAndView doBoardmodifyAction(@ModelAttribute BoardVO boardVO, @SessionAttribute("_USER_") MemberVO memberVO) {
 		ModelAndView view = new ModelAndView("redirect:/board/detail/"+boardVO.getBoardId());
 		
+		XssFilter xssFilter = XssFilter.getInstance("lucy-xss-superset.xml");
+		boardVO.setContent(xssFilter.doFilter(boardVO.getTitle()));
+		boardVO.setContent(xssFilter.doFilter(boardVO.getContent()));
+		
 		MultipartFile video = boardVO.getVideo();
 		MultipartFile poster = boardVO.getPoster();
-		
 		
 		if ( !video.isEmpty() ) {
 			String videoPath = UUID.randomUUID().toString();
@@ -206,7 +219,7 @@ public class BoardController {
 			}
 		}
 		else {
-			boardVO.setVideoPath("");
+			
 		}
 		
 		
@@ -229,7 +242,6 @@ public class BoardController {
 			}
 		}
 		else {
-			boardVO.setPosterPath("");
 		}
 		
 		if ( boardVO.getUrlAddress() == null ) {

@@ -18,11 +18,11 @@
 		var passwordConfirmAfter = $(`<div class="error"> 비밀번호를 확인해 주세요. </div>`);
 		
 		
-		$("#email").after(emailAfter);
-		$("#name").after(nameAfter);
-		$("#nickname").after(nicknameAfter);
-		$("#password").after(passwordAfter); 
-		$("#passwordConfirm").after(passwordConfirmAfter);
+		$("#emailError").prepend(emailAfter);
+		$("#nameError").prepend(nameAfter);
+		$("#nicknameError").prepend(nicknameAfter);
+		$("#passwordError").prepend(passwordAfter); 
+		$("#passwordConfirmError").prepend(passwordConfirmAfter);
 		
 		var emailEmpty = false;
 		var nameEmpty = false;
@@ -62,38 +62,38 @@
 			if (emailEmpty || nameEmpty || nicknameEmpty || passwordEmpty || passwordConfirmEmpty) {
 				$(".error").remove();
 				if (emailEmpty) {
-					$("#email").after(emailAfter);
+					$("#emailError").prepend(emailAfter);
 				}
 				else {
 					if ( !emailRegex.test($("#email").val()) ) {
-						$("#email").after(emailRegexAfter);
+						$("#emailError").prepend(emailRegexAfter);
 		            }
 					else { 
 						if ( emailRegexbool ) {
-							$("#email").after(emailRegexboolAfter);
+							$("#emailError").prepend(emailRegexboolAfter);
 						}
 					}
 				}
 				if (nameEmpty) {
-					$("#name").after(nameAfter);
+					$("#nameError").prepend(nameAfter);
 				}
 				if (nicknameEmpty) {
-					$("#nickname").after(nicknameAfter);
+					$("#nicknameError").prepend(nicknameAfter);
 				}
 				if (passwordEmpty) {
-					$("#password").after(passwordAfter);
+					$("#passwordError").prepend(passwordAfter);
 				}
 				else {
 					if ( !passwordRegex.test($("#password").val()) ) {
-						$("#password").after(passwordRegexAter);
+						$("#passwordError").prepend(passwordRegexAter);
 			        }
 				}
 				if (passwordConfirmEmpty) {
-					$("#passwordConfirm").after(passwordConfirmAfter);
+					$("#passwordConfirmError").prepend(passwordConfirmAfter);
 				}
 				else {
 					if ( $("#password").val() != $("#passwordConfirm").val() ) {
-						$("#passwordConfirm").after(passwordConfirmAfter);
+						$("#passwordConfirmError").prepend(passwordConfirmAfter);
 					}
 				}
 				result = true;
@@ -101,21 +101,21 @@
 			else {
 				$(".error").remove();
 				if ( !passwordRegex.test($("#password").val()) ) {
-					$("#password").after(passwordRegexAter);
+					$("#passwordError").prepend(passwordRegexAter);
 					result = true;
 		        }
 				if ( !emailRegex.test($("#email").val()) ) {
-					$("#email").after(emailRegexAfter);
+					$("#emailError").prepend(emailRegexAfter);
 					result = true;
 	            }
 				else {
 					if ( emailRegexbool ) {
-						$("#email").after(emailRegexboolAfter);
+						$("#emailError").prepend(emailRegexboolAfter);
 						result = true;
 					}
 				}
 				if ( $("#password").val() != $("#passwordConfirm").val() ) {
-					$("#passwordConfirm").after(passwordConfirmAfter);
+					$("#passwordConfirmError").prepend(passwordConfirmAfter);
 					result = true;
 				}
 			}
@@ -177,7 +177,7 @@
 </script> 
 <title>Member Regist</title>
 	<div id="alldiv">
-		<h1>Member Regist</h1>
+		<h2 class="boardTitle">회원가입</h2>
 			<c:if test= "${param.error eq '1' }">
 				<article>
 					<div class="error"> 
@@ -189,11 +189,15 @@
 			<div>
 				<input type="email" id="email" name="email" placeholder="E-Mail" /> <!-- 동영상 파일만 선택되도록 설정 -->
 			</div>
+			<div id="emailError">
+			</div>
 			<div>
 				<form:errors path="email"/>
 			</div>
 			<div>
 				<input type="text" id="name" name="name" placeholder="NAME" />
+			</div>
+			<div id="nameError">
 			</div>
 			<div>
 				<form:errors path="name"/>
@@ -201,24 +205,30 @@
 			<div>
 				<input type="text" id="nickname" name="nickname" placeholder="닉네임" />
 			</div>
+			<div id="nicknameError">
+			</div>
 			<div>
 				<form:errors path="nickname"/>
 			</div>
 			<div>
 				<input type="password" id="password" name="password" placeholder="PASSWORD" />
 			</div>
+			<div id="passwordError">
+			</div>
 			<div>
 				<input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="PASSWORD CONFIRM"/>
+			</div>
+			<div id="passwordConfirmError">
 			</div>
 			<div>
 				<form:errors path="password"/>
 			</div>
 			<div>
-				<input type="file" id="file" name="file" placeholder="PICTURE" accept=".gif, .jpg, .jpeg, .png"/>
+				<input style="margin-top:15px; background-color:#fff;" type="file" id="file" name="file" placeholder="PICTURE" accept=".gif, .jpg, .jpeg, .png"/>
 			</div>
-			<div>
-				일반 사용자<input style="width:40px;" type="radio" id="normalCheck" name="memberAuthority" value="2" checked/>
-				Review 사용자<input style="width:40px;" type="radio" id="reviewCheck" name="memberAuthority" value="1"/>
+			<div style="color:#fff; letter-spacing: 1px; text-shadow: 2px 2px black;">
+				일반 사용자<input style="width:40px; margin-top:15px; margin-bottom:15px;" type="radio" id="normalCheck" name="memberAuthority" value="2" checked/>
+				Review 사용자<input style="width:40px; margin-top:15px; margin-bottom:15px;" type="radio" id="reviewCheck" name="memberAuthority" value="1"/>
 			</div>
 			<div>
 				<input type="button" id="registBtn" value="등록"/>

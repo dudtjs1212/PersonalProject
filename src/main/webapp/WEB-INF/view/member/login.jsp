@@ -69,13 +69,13 @@
 			
 			var blockUser = $(`<div class="error"> Password 3회이상 실패하여 1시간 동안 계정이 잠겼습니다. <br/> 1시간 이후에 다시 이용 바랍니다.</div>`);
 			var loginFail = $(`<div class="error"> ID 또는 Password가 맞지 않습니다.</div>`);        
-			$.post("/GameReview/member/login", 
+			$.post("/GameReview/memberlogin", 
 					$(`#memberLoginForm`).serialize()
 					, function(response) {
-	            if (response.status) {
+	           /*  if (response.status) {
 	            	$("#email").before(blockUser);
 	            }
-	            else {
+	            else { */
 	            	if (response.loginStatus){
 	            		alert(response.message);
 	            		location.href="/GameReview/main/home"
@@ -83,7 +83,7 @@
 		            else {
 		            	$("#email").before(loginFail);
 		            }
-	            }
+	            //}
 	            //alert(response.message);
 	         });       
 			/* $("#memberLoginForm").attr({
@@ -104,7 +104,7 @@
 	
 </script>
 	<div id="alldiv">
-		<h1> 회원 로그인 </h1>
+		<h2 class="boardTitle"> 회원 로그인 </h2>
 			<c:if test= "${loginMember.error eq '1' }">
 				<article>
 					<div class="error"> 

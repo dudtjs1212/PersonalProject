@@ -11,4 +11,8 @@ public interface MemberBiz {
 	public boolean readOneEmail(String email);
 	
 	public boolean isBlockUser(String email);
+	
+	public boolean increaseLoginFailCount(String email);
+	
+	public boolean unblockUser(String email);
 }

@@ -51,19 +51,27 @@
 
 </script>
 	<div id="alldiv">
-		<c:if test="${not empty board.videoPath}">
-			<div class="video" style="display: inline-block;">
-				<video style="width: 70%; height: 40%;"	preload="metadata"
-						autoplay controls="controls" 
-						poster="<c:url value='/board/poster/download/${board.posterPath}' />">
-					<source src="<c:url value='/board/video/download/${board.videoPath}' />" />
-				</video>
+		<div class="detailPage">
+			<c:if test="${not empty board.videoPath}">
+				<div class="video" style="display: inline-block;">
+					<video style="width: 100%; height: 70%;"	preload="metadata"
+							autoplay controls="controls" 
+							poster="<c:url value='/board/poster/download/${board.posterPath}' />">
+						<source src="<c:url value='/board/video/download/${board.videoPath}' />" />
+					</video>
+				</div>
+			</c:if>
+			<div class="detailPage">
+				<span> <h1>${board.title}</h1> </span> 
 			</div>
-		</c:if>
-		<h1>${board.title}</h1> <br/>
-		${board.content} <br/>
-		${board.memberVO.nickname} <span style="padding-left: 10px;"> 조회수 : ${board.viewCount} </span>
-	  
+			<div class="detailPage" >
+			<span style="margin-right:15px; margin-left:15px;"> ${board.content} </span> 
+			</div>
+			<div class="detailPage" style="margin-top:30px; padding-bottom:30px; text-align:right; padding-top:30px;  margin-right:15px;">
+			${board.memberVO.nickname} 
+			<span style="padding-left: 10px; margin-right:15px;">조회수 : ${board.viewCount} </span>
+			</div>
+	  	</div>
 	 	<div style="padding-top:20px;">
 			<c:forEach items="${board.replyList}" var="reply">
 				<div class="replyDiv">
@@ -71,7 +79,7 @@
 						<input type="hidden" id="replyId" class="replyId" name="replyId" value="${reply.replyId}" />
 						<input type="hidden" id="parentReplyId" class="parentReplyId" name="parentReplyId" value="${reply.replyId}"  />
 						<input type="hidden" name="boardId" value="${board.boardId}" />
-						<div>${reply.memberVO.nickname} (${reply.memberVO.email})</div>
+						<div>${reply.memberVO.nickname} </div>
 						<div>${reply.crtDt}</div>		
 						<div>${reply.content}</div>		
 					</div>
@@ -93,7 +101,7 @@
 		</form>
 		<div class="href">
 			<a href="<c:url value='/board/modify/${board.boardId}'/>">수정</a>
-			<a href="/GameReview/board/list">목록</a>
+			<a href="/GameReview/board/list/${board.boardDivision}">목록</a>
 		</div>
 	</div>
 <jsp:include page="/WEB-INF/view/common/layout/layout_footer.jsp" />
