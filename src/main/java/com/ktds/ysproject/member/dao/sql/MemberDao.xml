@@ -43,7 +43,7 @@
 		AND 	PASSWORD = #{password}
 	</select>
 	
-	<select id="selectSaltById" parameterType="string" resultType="string">
+	<select id="selectSaltById" parameterType="string" resultType="string"> 
 		SELECT	SALT
 		FROM	MEMBER
 		WHERE	EMAIL = #{email}

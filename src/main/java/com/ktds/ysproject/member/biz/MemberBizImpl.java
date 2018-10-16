@@ -1,5 +1,7 @@
 package com.ktds.ysproject.member.biz;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,12 +30,12 @@ public class MemberBizImpl implements MemberBiz {
 
 	@Override
 	public MemberVO readOneMember(MemberVO memberVO) {
+		System.out.println("!!!@@" + memberVO.getEmail());
 		String salt = this.memberDao.selectSaltById(memberVO.getEmail());
 		if ( salt != null ) {
 			String password = this.getHashedPassword(salt, memberVO.getPassword());
 			memberVO.setPassword(password);
 		}
-		
 		MemberVO readMemberVO = new MemberVO();
 		readMemberVO.setEmail(memberVO.getEmail());
 		readMemberVO.setPassword(memberVO.getPassword());

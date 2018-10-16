@@ -1,5 +1,7 @@
 package com.ktds.ysproject.member.biz;
 
+import javax.servlet.http.HttpSession;
+
 import com.ktds.ysproject.member.vo.MemberVO;
 
 public interface MemberBiz {

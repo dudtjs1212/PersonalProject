@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Role;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -48,6 +50,13 @@ public class MemberController {
 		return "member/regist";
 	}
 	
+	/*@Secured("permitAll")
+	@PostMapping("/member/fail")
+	public Map<String, Object> doBlockCheckAction() {
+		
+	}*/
+	
+	@Secured("permitAll")
 	@GetMapping("/member/logout")
 	public String doMemberLogoutAction(HttpSession session) {
 		// Logout
@@ -128,6 +137,7 @@ public class MemberController {
 	}
 	
 
+	@Secured("permitAll")
 	@GetMapping("/member/login")
 	public String viewLoginPage() {
 		return "member/login";
@@ -143,15 +153,18 @@ public class MemberController {
 		Map<String, Object> result = new HashMap<>();
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getDetails();
-		
+		memberVO.setEmail(user.getEmail());
+		memberVO.setPassword(user.getPassword());
 		MemberVO loginMember = memberService.readOneMember(memberVO);
-		loginMember.setEmail(user.getEmail());
-		loginMember.setPassword(user.getPassword());
-		result.put("loginStatus", false);
+		//result.put("loginStatus", false);
 		if ( loginMember != null ) {
-			session.setAttribute("_TOKEN_", loginMember);
+			session.setAttribute("_TOKEN_", user.getToken());
+			session.setAttribute("_USER_", loginMember);
 			result.put("loginStatus", true);
 			result.put("message", "Login 되었습니다.");
+		}
+		if ( user.isBlockAccount() ) {
+			result.put("loginStatus", false);
 		}
 		
 		/*if ( isBlockUser ) {

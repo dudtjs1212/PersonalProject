@@ -22,8 +22,8 @@
 			<mvc:exclude-mapping path="/member/logout"/>
 			<mvc:exclude-mapping path="/member/duplicate" />
 			<mvc:exclude-mapping path="/member/download" />
-			<!-- <mvc:exclude-mapping path="/member/login" />
-			<mvc:exclude-mapping path="/member/regist" />
+			<mvc:exclude-mapping path="/member/loginSuccess" />
+			<!-- <mvc:exclude-mapping path="/member/regist" />
 			<mvc:exclude-mapping path="/member/duplicate" /> -->
 			<bean 	id="preventSessionInterceptor"
 					class="com.ktds.ysproject.common.interceptors.PreventSessionInterceptor">

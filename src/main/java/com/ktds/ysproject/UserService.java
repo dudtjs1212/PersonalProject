@@ -26,33 +26,34 @@ public class UserService implements AuthenticationProvider{
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String email = authentication.getPrincipal().toString();
-		System.out.println("!!!!씨;"+authentication.getCredentials().toString());
 		String userPassword = authentication.getCredentials().toString();
-		System.out.println(email);
-		System.out.println(userPassword);
 		MemberVO memberVO = new MemberVO();
 		memberVO.setEmail(email);
 		memberVO.setPassword(userPassword);
 		
 		boolean isBlockAccount = memberBiz.isBlockUser(memberVO.getEmail());
-		boolean isLoginSuccess = false;
+		MemberVO isLoginSuccess = new MemberVO();
 		
 		if ( !isBlockAccount ){
-			isLoginSuccess = memberBiz.readOneEmail(memberVO.getEmail());
+			System.out.println("!!!!"+memberVO.getEmail());
+			isLoginSuccess = memberBiz.readOneMember(memberVO);
 			
-			if ( !isLoginSuccess ){
+			if ( isLoginSuccess == null ){
 				memberBiz.increaseLoginFailCount(memberVO.getEmail());
 			}
 			else {
 				memberBiz.unblockUser(memberVO.getEmail());
 			}
 		}
+		else {
+			isLoginSuccess = null;
+		}
 		
 		// 로그인 횟수 제한 방어코드 작성
 		
 		UsernamePasswordAuthenticationToken result = null;
 				
-		if ( isLoginSuccess ) {
+		if ( isLoginSuccess != null ) {
 			String token = UUID.randomUUID().toString();
 			String grade;
 			if ( memberVO.getMemberAuthority() == 0 ) {
@@ -73,7 +74,7 @@ public class UserService implements AuthenticationProvider{
 				roles.add(new SimpleGrantedAuthority("ROLE_USER"));
 			}
 			
-			result = new UsernamePasswordAuthenticationToken(email, userPassword);
+			result = new UsernamePasswordAuthenticationToken(email, userPassword, roles);
 			User user = new User(email, userPassword, grade, isBlockAccount, token);
 			result.setDetails(user);
 		}

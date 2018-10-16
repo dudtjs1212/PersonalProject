@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,8 @@ import io.github.seccoding.web.pager.explorer.PageExplorer;
   
 
 @Controller
+
+@Secured({"ROLE_USER", "ROLE_ADMIN", "REVIEW_USER" })
 public class BoardController {
 
 	@Autowired
@@ -48,9 +51,9 @@ public class BoardController {
 	private String posterUploadPath;
 	
 	@RequestMapping("/board/list/init")
-	public String viewBoardListPageForInitiate(HttpSession session) {
+	public String viewBoardListPageForInitiate(@ModelAttribute BoardVO boardVO, HttpSession session) {
 		session.removeAttribute("_SEARCH_");
-		return "redirect:/board/list";
+		return "redirect:/board/list/" + boardVO.getBoardDivision();
 	}
 	
 	@GetMapping("/main/home")

@@ -18,7 +18,7 @@ public class PreventSessionInterceptor extends HandlerInterceptorAdapter {
 		MemberVO memberVO = (MemberVO)session.getAttribute("_USER_");
 		
 		if( memberVO != null) {
-			response.sendRedirect("GameReview/main/home");
+			response.sendRedirect("/GameReview/main/home");
 			return false;
 		}
 		return true;

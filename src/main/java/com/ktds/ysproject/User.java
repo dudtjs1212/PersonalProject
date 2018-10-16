@@ -70,6 +70,10 @@ public class User implements UserDetails {
 		authorities.add(new SimpleGrantedAuthority(grade));
 		if (grade.equals("ROLE_ADMIN")) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+			authorities.add(new SimpleGrantedAuthority("REVIEW_USER"));
+		}
+		else if (grade.equals("REVIEW_USER")) {
+			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		}
 		return authorities;
 	}
