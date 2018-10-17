@@ -19,8 +19,8 @@
 			username-parameter="email"
 			password-parameter="password"
 			login-processing-url="/memberlogin" 
-			default-target-url="/member/loginSuccess"  
-			authentication-failure-handler-ref="AuthenticationFailureController"
+			default-target-url="/member/loginSuccess" 
+			authentication-failure-handler-ref="authenticationFailureController"
 			always-use-default-target="true"
 		/>
 		<!-- Security Logout 처리 -->
@@ -48,4 +48,6 @@
 		<s:authentication-provider ref="userService"/>
 	</s:authentication-manager>
 	
+	<bean	id="authenticationFailureController"
+			class="com.ktds.ysproject.member.web.AuthenticationFailureController" />
 </beans>

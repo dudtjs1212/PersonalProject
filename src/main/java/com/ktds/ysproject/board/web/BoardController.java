@@ -36,7 +36,7 @@ import io.github.seccoding.web.pager.explorer.PageExplorer;
 
 @Controller
 
-@Secured({"ROLE_USER", "ROLE_ADMIN", "REVIEW_USER" })
+@Secured({"ROLE_ADMIN", "REVIEW_USER", "ROLE_USER"})
 public class BoardController {
 
 	@Autowired
@@ -64,6 +64,7 @@ public class BoardController {
 		return view;
 	}
 	
+	@Secured({"ROLE_USER", "ROLE_ADMIN", "REVIEW_USER" })
 	@GetMapping("/board/write/{boardDivision}")
 	public ModelAndView viewCreateOneBoardPage(@PathVariable int boardDivision) {
 		ModelAndView view = new ModelAndView("board/write");
@@ -71,9 +72,20 @@ public class BoardController {
 		return view;
 	}
 	
+	@Secured({"ROLE_USER", "ROLE_ADMIN", "REVIEW_USER" })
 	@PostMapping("/board/write")
-	public ModelAndView doBoardWriteAction(@Valid @ModelAttribute BoardVO boardVO, Errors errors, @SessionAttribute("_USER_") MemberVO memberVO) {
+	public ModelAndView doBoardWriteAction(@Valid @ModelAttribute BoardVO boardVO, Errors errors, @SessionAttribute("_USER_") MemberVO memberVO, HttpSession session) {
 		ModelAndView view = new ModelAndView("redirect:/board/list/" + boardVO.getBoardDivision());
+		
+		
+		String sessionToken = (String) session.getAttribute("_TOKEN_");
+		if ( !boardVO.getToken().equals(sessionToken) ){
+			throw new RuntimeException("잘못된 접근입니다.");
+		}
+		
+		String email = ((MemberVO) session.getAttribute("_USER_")).getEmail();
+		boardVO.setEmail(email);
+		
 		
 		XssFilter xssFilter = XssFilter.getInstance("lucy-xss-superset.xml");
 		boardVO.setContent(xssFilter.doFilter(boardVO.getTitle()));
@@ -142,9 +154,10 @@ public class BoardController {
 		return view;
 	}
 	
+	
 	@RequestMapping("/board/list/{boardDivision}")
 	public ModelAndView viewBoardListPage(@PathVariable int boardDivision, @ModelAttribute BoardSearchVO boardSearchVO, HttpServletRequest request, HttpSession session) {
-		
+		boardSearchVO.setPageNo(0);
 		// 전체 검색 or 상세 -> 목록 or 글쓰기
 		if ( boardSearchVO.getSearchKeyword() == null ) {
 			boardSearchVO = (BoardSearchVO) session.getAttribute("_SEARCH_");
@@ -174,6 +187,7 @@ public class BoardController {
 		return view;
 	}
 	
+	@Secured({"ROLE_USER", "ROLE_ADMIN", "REVIEW_USER" })
 	@RequestMapping("/board/detail/{id}")
 	public ModelAndView viewOneBoardDetailPage(@SessionAttribute("_USER_") MemberVO memberVO, @PathVariable String id) {
 		ModelAndView view = new ModelAndView("board/detail");
@@ -193,6 +207,7 @@ public class BoardController {
 		
 	}
 	
+	@Secured({"ROLE_USER", "ROLE_ADMIN", "REVIEW_USER" })
 	@PostMapping("/board/modify")
 	public ModelAndView doBoardmodifyAction(@ModelAttribute BoardVO boardVO, @SessionAttribute("_USER_") MemberVO memberVO) {
 		ModelAndView view = new ModelAndView("redirect:/board/detail/"+boardVO.getBoardId());

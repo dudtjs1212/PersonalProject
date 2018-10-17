@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s"	uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp" />
 	<div id="alldiv">
 			<c:choose>
@@ -54,7 +55,26 @@
 	     	</form>
 	     </div>
 	     <div class="href">
-	     	<a href="/GameReview//board/write/${boardDivision}"> 글쓰기</a>
+	     	<c:choose>
+	     		<c:when test="${boardDivision eq '0'}">
+	     			<s:authorize access="hasRole('ROLE_ADMIN')">
+	     				<a href="/GameReview/board/write/${boardDivision}"> 글쓰기</a>
+	     			</s:authorize>
+	     		</c:when>
+	     		<c:when test="${boardDivision eq '4'}">
+	     			<s:authorize access="permitAll">
+	     				<a href="/GameReview/board/write/${boardDivision}"> 글쓰기</a>
+	     			</s:authorize>
+	     		</c:when>
+	     		<c:otherwise>
+	     			c
+	     			<s:authorize access="hasRole('REVIEW_USER') or hasAnyRole('ROLE_ADMIN')">
+	     				d
+	     				<a href="/GameReview/board/write/${boardDivision}"> 글쓰기</a>
+	     			</s:authorize>
+	     		</c:otherwise>
+	     	</c:choose>
+	     		
 	     	<a href="/GameReview/main/home">메인 화면</a>
 	     </div>
 	</div>

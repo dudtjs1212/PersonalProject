@@ -35,7 +35,6 @@ public class UserService implements AuthenticationProvider{
 		MemberVO isLoginSuccess = new MemberVO();
 		
 		if ( !isBlockAccount ){
-			System.out.println("!!!!"+memberVO.getEmail());
 			isLoginSuccess = memberBiz.readOneMember(memberVO);
 			
 			if ( isLoginSuccess == null ){
@@ -56,16 +55,17 @@ public class UserService implements AuthenticationProvider{
 		if ( isLoginSuccess != null ) {
 			String token = UUID.randomUUID().toString();
 			String grade;
-			if ( memberVO.getMemberAuthority() == 0 ) {
+			if ( isLoginSuccess.getMemberAuthority() == 0 ) {
 				grade = "ROLE_ADMIN";
 			}
-			else if ( memberVO.getMemberAuthority() == 1 ) {
+			else if ( isLoginSuccess.getMemberAuthority() == 1 ) {
 				grade = "REVIEW_USER";
 			}
 			else {
 				grade = "ROLE_USER";
 			}
 			List<GrantedAuthority> roles = new ArrayList<>();
+			roles.add(new SimpleGrantedAuthority(grade));
 			if (grade.equals("ROLE_ADMIN")) {
 				roles.add(new SimpleGrantedAuthority("ROLE_USER"));
 				roles.add(new SimpleGrantedAuthority("REVIEW_USER"));
@@ -73,7 +73,6 @@ public class UserService implements AuthenticationProvider{
 			else if (grade.equals("REVIEW_USER")) {
 				roles.add(new SimpleGrantedAuthority("ROLE_USER"));
 			}
-			
 			result = new UsernamePasswordAuthenticationToken(email, userPassword, roles);
 			User user = new User(email, userPassword, grade, isBlockAccount, token);
 			result.setDetails(user);

@@ -139,8 +139,10 @@ public class MemberController {
 
 	@Secured("permitAll")
 	@GetMapping("/member/login")
-	public String viewLoginPage() {
-		return "member/login";
+	public ModelAndView viewLoginPage(@RequestParam(required=false, defaultValue="") String error) {
+		ModelAndView view = new ModelAndView("member/login");
+		view.addObject("error", error);
+		return view;
 	}
 	
 	@GetMapping("/member/loginSuccess")

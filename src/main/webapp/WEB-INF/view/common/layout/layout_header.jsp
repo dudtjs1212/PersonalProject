@@ -43,6 +43,17 @@
 		</header>
 		<section class="inline">
 			<aside>
-				Aside
+				<div style="width:200px; height:120px;"></div>
+				<a href="http://pubg.game.daum.net/pubg/event/bp_attendance/index.daum">
+					<img style="width:300px; height:140px;" src="/GameReview/img/potg.jpg"/>
+				</a>
+				<div style="width:200px; height:50px;"></div>
+				<a href="https://www.ktds.com/main.jsp">
+					<img style="width:250px; height:300px;" src="/GameReview/img/KTDS.jpg"/>
+				</a>
+				<div style="width:200px; height:50px;"></div>
+				<a href="https://kr.leagueoflegends.com">
+					<img style="width:300px; height:165px;" src="/GameReview/img/lol.jpg"/>
+				</a>
 			</aside>
 		<section>
