@@ -44,7 +44,7 @@
 			</form:form>
 		</div>
 		<div class="href">
-			<a style="margin-right:20px;" href="/GameReview/board/list/${board.boardDivision}">목록</a>
+			<a style="margin-right:20px;" href="/GameReview/board/list/${boardDivision}">목록</a>
 			<a href="/GameReview/main/home">메인 화면</a>
 		</div>
 	</div>
