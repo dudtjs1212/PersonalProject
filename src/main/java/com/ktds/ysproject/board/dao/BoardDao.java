@@ -19,4 +19,12 @@ public interface BoardDao {
 	
 	public int updateViewCount(String boardId);
 	
+	public List<BoardVO> selectAllDivisionZeroBoard();
+
+	public List<BoardVO> selectAllDivisionOneBoard();
+	
+	public List<BoardVO> selectAllDivisionTwoBoard();
+	
+	public List<BoardVO> selectAllDivisionThreeBoard();
+	
 }

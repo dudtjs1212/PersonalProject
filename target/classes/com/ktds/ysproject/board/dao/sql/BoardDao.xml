@@ -148,5 +148,117 @@
 		SET		VIEW_COUNT = VIEW_COUNT + 1
 		WHERE	BOARD_ID = #{boardId}
 	</update>
+	
+	<select id="selectAllDivisionZeroBoard" resultMap="boardResultMap">
+		SELECT	B.BOARD_ID 
+				, B.TITLE 
+				, B.CONTENT 
+				, B.CRT_DT 
+				, B.VIEW_COUNT 
+				, B.VIDEO_PATH 
+				, B.POSTER_PATH 
+				, B.BOARD_DIVISION 
+				, B.URL_ADDRESS 
+				, B.RECOMMEND_COUNT 
+				, B.EMAIL
+				, M.NAME 
+				, M.NICKNAME
+				, M.PASSWORD
+				, M.SALT
+				, M.PROFILE_IMG
+				, M.LOGIN_FAIL_COUNT
+				, M.MEMBER_AUTHORITY
+				, M.LOGIN_FAIL_TIME
+		FROM 	BOARD B
+				, MEMBER M
+		WHERE	ROWNUM <![CDATA[<=]]> 10
+		AND		B.EMAIL = M.EMAIL
+		AND 	B.BOARD_DIVISION = 0
+		ORDER	BY B.CRT_DT DESC
+	</select>
+	 
+	 <select id="selectAllDivisionOneBoard" resultMap="boardResultMap">
+		SELECT	B.BOARD_ID 
+				, B.TITLE 
+				, B.CONTENT 
+				, B.CRT_DT 
+				, B.VIEW_COUNT 
+				, B.VIDEO_PATH 
+				, B.POSTER_PATH 
+				, B.BOARD_DIVISION 
+				, B.URL_ADDRESS 
+				, B.RECOMMEND_COUNT 
+				, B.EMAIL 
+				, M.NAME 
+				, M.NICKNAME
+				, M.PASSWORD
+				, M.SALT
+				, M.PROFILE_IMG
+				, M.LOGIN_FAIL_COUNT
+				, M.MEMBER_AUTHORITY
+				, M.LOGIN_FAIL_TIME
+		FROM 	BOARD B
+				, MEMBER M
+		WHERE	ROWNUM <![CDATA[<=]]> 10
+		AND		B.EMAIL = M.EMAIL
+		AND 	B.BOARD_DIVISION = 1
+		ORDER	BY B.CRT_DT DESC
+	</select>
+	
+	<select id="selectAllDivisionTwoBoard" resultMap="boardResultMap">
+		SELECT	B.BOARD_ID 
+				, B.TITLE 
+				, B.CONTENT 
+				, B.CRT_DT 
+				, B.VIEW_COUNT 
+				, B.VIDEO_PATH 
+				, B.POSTER_PATH 
+				, B.BOARD_DIVISION 
+				, B.URL_ADDRESS 
+				, B.RECOMMEND_COUNT 
+				, B.EMAIL 
+				, M.NAME 
+				, M.NICKNAME
+				, M.PASSWORD
+				, M.SALT
+				, M.PROFILE_IMG
+				, M.LOGIN_FAIL_COUNT
+				, M.MEMBER_AUTHORITY
+				, M.LOGIN_FAIL_TIME
+		FROM 	BOARD B
+				, MEMBER M
+		WHERE	ROWNUM <![CDATA[<=]]> 10
+		AND		B.EMAIL = M.EMAIL
+		AND 	B.BOARD_DIVISION = 2
+		ORDER	BY B.CRT_DT DESC
+	</select>
+	
+	<select id="selectAllDivisionThreeBoard" resultMap="boardResultMap">
+		SELECT	B.BOARD_ID 
+				, B.TITLE 
+				, B.CONTENT 
+				, B.CRT_DT 
+				, B.VIEW_COUNT 
+				, B.VIDEO_PATH 
+				, B.POSTER_PATH 
+				, B.BOARD_DIVISION 
+				, B.URL_ADDRESS 
+				, B.RECOMMEND_COUNT 
+				, B.EMAIL 
+				, M.NAME 
+				, M.NICKNAME
+				, M.PASSWORD
+				, M.SALT
+				, M.PROFILE_IMG
+				, M.LOGIN_FAIL_COUNT
+				, M.MEMBER_AUTHORITY
+				, M.LOGIN_FAIL_TIME
+		FROM 	BOARD B
+				, MEMBER M
+		WHERE	ROWNUM <![CDATA[<=]]> 10
+		AND		B.EMAIL = M.EMAIL
+		AND 	B.BOARD_DIVISION = 3
+		ORDER	BY B.CRT_DT DESC
+	</select>
 	 
 </mapper>

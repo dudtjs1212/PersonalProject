@@ -1,5 +1,9 @@
 package com.ktds.ysproject.board.biz;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,8 +30,20 @@ public class BoardBizImpl implements BoardBiz {
 
 	@Override
 	public BoardVO readOneBoard(String boardId) {
-		this.boardDao.updateViewCount(boardId);
 		return boardDao.selectOneBoard(boardId);
+	}
+	
+	@Override
+	public BoardVO readOneBoard(String boardId, HttpSession session) {
+		
+		BoardVO board = boardDao.selectOneBoard(boardId);
+		
+		MemberVO memberVO = (MemberVO) session.getAttribute("_USER_");
+		if ( !memberVO.getEmail().equals(board.getEmail()) ) {
+			this.boardDao.updateViewCount(boardId);
+			board = boardDao.selectOneBoard(boardId);
+		}
+		return board;
 	}
 
 	@Override
@@ -48,5 +64,25 @@ public class BoardBizImpl implements BoardBiz {
 	@Override
 	public boolean updateOneBoard(BoardVO boardVO) {
 		return boardDao.updateOneBoard(boardVO)>0;
+	}
+
+	@Override
+	public List<BoardVO> readAllDivisionZeroBoard() {
+		return boardDao.selectAllDivisionZeroBoard();
+	}
+
+	@Override
+	public List<BoardVO> readAllDivisionOneBoard() {
+		return boardDao.selectAllDivisionOneBoard();
+	}
+
+	@Override
+	public List<BoardVO> readAllDivisionTwoBoard() {
+		return boardDao.selectAllDivisionTwoBoard();
+	}
+
+	@Override
+	public List<BoardVO> readAllDivisionThreeBoard() {
+		return boardDao.selectAllDivisionThreeBoard();
 	}
 }

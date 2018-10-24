@@ -7,7 +7,7 @@ public class PageOption {
 
     private String link = "pageNo";
 
-    private String pageFormat = "[@]";
+    private String pageFormat = "  @  ";
 
     private String prev = "Prev";
 

@@ -70,9 +70,9 @@ public class User implements UserDetails {
 		authorities.add(new SimpleGrantedAuthority(grade));
 		if (grade.equals("ROLE_ADMIN")) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-			authorities.add(new SimpleGrantedAuthority("REVIEW_USER"));
+			authorities.add(new SimpleGrantedAuthority("ROLE_REVIEW"));
 		}
-		else if (grade.equals("REVIEW_USER")) {
+		else if (grade.equals("ROLE_REVIEW")) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		}
 		return authorities;
@@ -85,7 +85,6 @@ public class User implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return this.email;
 	}
 

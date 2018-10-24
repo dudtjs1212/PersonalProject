@@ -26,7 +26,7 @@
 		
 		$(".parentReplyBtn").click(function(){
 			var parentId = $(this).closest(".replyDiv").find(".parentReplyId").val();
-		    var cmForm = $('<form:form class="replyData" modelAttribute="replyVO"><div class="rereplyDiv"><textarea name="content"></textarea><input type="hidden" name="boardId" value="${board.boardId}" /> <input type="hidden" id="replyId" class="replyId" name="replyId" value="${reply.replyId}" /><input type="hidden" id="parentReplyId" class="parentReplyId" name="parentReplyId" value="' + parentId + '" /><input style= "display:inline-block; margin-left: ${(reply.level-1) * 30}px;" type="button" class="rereplyBtn" value="답글" /><input type="button" class ="replyDelBtn" value="삭제"/></div></form:form>');
+		    var cmForm = $('<form:form class="replyData" modelAttribute="replyVO"><div class="rereplyDiv"><textarea style = "width:650px; margin-reft: ${(reply.level-1) * 30}px; border: 1px solid #bbb; border-radius: 7px;" name="content"></textarea><input type="hidden" name="boardId" value="${board.boardId}" /> <input type="hidden" id="replyId" class="replyId" name="replyId" value="${reply.replyId}" /><input type="hidden" id="parentReplyId" class="parentReplyId" name="parentReplyId" value="' + parentId + '" /><input style= "display:inline-block;" type="button" class="rereplyBtn" value="답글"/><input type="button" class ="replyDelBtn" value="삭제"/></div></form:form>');
 			
 		    if ( $(this).val()=="답글") {
 		    	$(".rereplyDiv").remove();//열려있는 댓댓글 창을 리셋
@@ -62,7 +62,7 @@
 				</div>
 			</c:if>
 			<div class="detailPage">
-				<span> <h1>${board.title}</h1> </span> 
+				<span> <h1 style="margin-right:15px; margin-left:15px;">${board.title}</h1> </span> 
 			</div>
 			<div class="detailPage" >
 			<span style="margin-right:15px; margin-left:15px;"> ${board.content} </span> 
@@ -79,28 +79,27 @@
 						<input type="hidden" id="replyId" class="replyId" name="replyId" value="${reply.replyId}" />
 						<input type="hidden" id="parentReplyId" class="parentReplyId" name="parentReplyId" value="${reply.replyId}"  />
 						<input type="hidden" name="boardId" value="${board.boardId}" />
-						<div>${reply.memberVO.nickname} </div>
-						<div>${reply.crtDt}</div>		
-						<div>${reply.content}</div>		
+						<div style="display:inline-block; margin-right:10px; margin-bottom:10px;">${reply.memberVO.nickname} </div>
+						<div style="display:inline-block;">${reply.crtDt}</div>		
+						<div style="margin-bottom:10px;">${reply.content}</div>		
 					</div>
-					<div class="cmBtn">
-						<input style= "display:inline-block; margin-left: ${(reply.level-1) * 30}px;" type="button" class="parentReplyBtn" value="답글" />
+					<div class="cmBtn" style="border-bottom: 2px solid white;">
+						<input style= "display:inline-block; margin-left: ${(reply.level-1) * 30}px; margin-bottom:15px;" type="button" class="parentReplyBtn" value="답글" />
 						<input type="button" class ="replyDelBtn" value="삭제"/>
 					</div>
 				</div>
 			</c:forEach>
 		</div>
-		
-		
-		<hr />
 		<form id="parentReplyForm" action="/GameReview/reply/write" method="POST">
 			<input type="hidden" name="boardId" value="${board.boardId}" />
 			<input type="hidden" name="parentReplyId" value="0" />
-			<textarea name="content"></textarea>
-			<input style= "display:inline-block;" type="submit" value="등록"/>
+			<textarea style = "width:970px; height:auto; margin-top:15px; border: 1px solid #bbb; border-radius: 7px;" name="content"></textarea>
+			<input class="replyRegistBtn" style= "display:inline-block;" type="submit" value="등록"/>
 		</form>
 		<div class="href">
-			<a href="<c:url value='/board/modify/${board.boardId}'/>">수정</a>
+			<c:if test="${board.email eq sessionScope._USER_.email}">
+				<a style="margin-right:20px;" href="<c:url value='/board/modify/${board.boardId}'/>">수정</a>
+			</c:if>
 			<a href="/GameReview/board/list/${board.boardDivision}">목록</a>
 		</div>
 	</div>

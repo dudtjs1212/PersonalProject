@@ -31,7 +31,7 @@
 							</div>
 						</c:if>
 					</a>
-					<div class="titlediv" style="display: inline-block; width:850px; height: 130px;">
+					<div class="titlediv" style="display: inline-block; width:auto; height: 130px;">
 						<a style="display: inline-block; margin-top:5px;" href="<c:url value='/board/detail/${board.boardId}'/>">
 						<h2 style="display: inline-block; padding-left: 10px; margin-top:5px; ">${board.title} </h2></a>
 						<br/>
@@ -40,17 +40,19 @@
 						<span style="padding-left: 10px;">${board.crtDt} </span> 
 						<span style="padding-left: 10px;"> 조회수 : ${board.viewCount} </span>
 					</div>
-					
-					
 				</div>
 			</c:forEach>
 		
-		<div class="padded">
-	     	<form id="searchForm" onsubmit="javascript:movePage(0);">
-	     		${pagenation}
-	     		<div>
-	     			<input type="text" name="searchKeyword" value="${boardSearchVO.searchKeyword}">
-	     			<a href="/GameReview/board/list/init">검색 초기화</a>
+		<div class="padded" style="width:1017.63px; height:80px; margin:0 auto;">
+	     	<form id="searchForm" onsubmit="javascript:movePage(0);" style="text-align : center">
+	     		<div class="href" style="font-size:1em; position:relative; margin:0 auto;">
+	     			${pagenation}
+	     		</div>
+	     		<div style="margin:0 auto;">
+     				<input style="border-radius: 7px; width:880px; height:29px;" type="text" name="searchKeyword" value="${boardSearchVO.searchKeyword}">
+	     			<div class="href" style="display:inline-block;">
+	     				<a href="/GameReview/board/list/${boardDivision}/init">검색 초기화</a>
+	     			</div>
 	     		</div>
 	     	</form>
 	     </div>
@@ -67,15 +69,12 @@
 	     			</s:authorize>
 	     		</c:when>
 	     		<c:otherwise>
-	     			c
-	     			<s:authorize access="hasRole('REVIEW_USER') or hasAnyRole('ROLE_ADMIN')">
-	     				d
+	     			<s:authorize access="hasAnyRole('ROLE_REVIEW' , 'ROLE_ADMIN')"> <!-- access="hasRole('ROLE_ADMIN') and hasRole('ROLE_REVIEW')"> -->
 	     				<a href="/GameReview/board/write/${boardDivision}"> 글쓰기</a>
 	     			</s:authorize>
 	     		</c:otherwise>
 	     	</c:choose>
-	     		
-	     	<a href="/GameReview/main/home">메인 화면</a>
+	     	<a href="/GameReview/main/home" style="margin-left:20px;">메인 화면</a>
 	     </div>
 	</div>
 <jsp:include page="/WEB-INF/view/common/layout/layout_footer.jsp" />

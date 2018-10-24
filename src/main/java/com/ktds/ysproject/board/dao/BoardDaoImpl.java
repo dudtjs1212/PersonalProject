@@ -48,6 +48,30 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao {
 	public int updateViewCount(String boardId) {
 		return getSqlSession().update("BoardDao.updateViewCount", boardId);
 	}
+
+	@Override
+	public List<BoardVO> selectAllDivisionZeroBoard() {
+		List<BoardVO> boardLoist = getSqlSession().selectList("BoardDao.selectAllDivisionZeroBoard");
+		for ( BoardVO boardVO : boardLoist) {
+			System.out.println("@!!@!!!!!" + boardVO);
+		}
+		return getSqlSession().selectList("BoardDao.selectAllDivisionZeroBoard");
+	}
+
+	@Override
+	public List<BoardVO> selectAllDivisionOneBoard() {
+		return getSqlSession().selectList("BoardDao.selectAllDivisionOneBoard");
+	}
+
+	@Override
+	public List<BoardVO> selectAllDivisionTwoBoard() {
+		return getSqlSession().selectList("BoardDao.selectAllDivisionTwoBoard");
+	}
+
+	@Override
+	public List<BoardVO> selectAllDivisionThreeBoard() {
+		return getSqlSession().selectList("BoardDao.selectAllDivisionThreeBoard");
+	}
 	
 	
 

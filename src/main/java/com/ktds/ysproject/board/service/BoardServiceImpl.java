@@ -2,6 +2,8 @@ package com.ktds.ysproject.board.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +46,34 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public boolean updateOneBoard(BoardVO boardVO) {
 		return boardBiz.updateOneBoard(boardVO);
+	}
+
+	@Override
+	public BoardVO readOneBoard(String boardId, HttpSession session) {
+		BoardVO boardVO = boardBiz.readOneBoard(boardId);
+		List<ReplyVO> replyList = replyBiz.selectAllReplies(boardId);
+		boardVO.setReplyList(replyList);
+		return boardVO;
+	}
+
+	@Override
+	public List<BoardVO> readAllDivisionZeroBoard() {
+		return boardBiz.readAllDivisionZeroBoard();
+	}
+
+	@Override
+	public List<BoardVO> readAllDivisionOneBoard() {
+		return boardBiz.readAllDivisionOneBoard();
+	}
+
+	@Override
+	public List<BoardVO> readAllDivisionTwoBoard() {
+		return boardBiz.readAllDivisionTwoBoard();
+	}
+
+	@Override
+	public List<BoardVO> readAllDivisionThreeBoard() {
+		return boardBiz.readAllDivisionThreeBoard();
 	}
 
 }

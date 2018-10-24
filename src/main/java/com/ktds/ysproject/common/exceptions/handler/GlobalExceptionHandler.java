@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 		return "error/404";
 	}	
 	
-	/*@ExceptionHandler(RuntimeException.class)
+	@ExceptionHandler(RuntimeException.class)
 	public String runtimeExceptionHandler(RuntimeException e) throws UnsupportedEncodingException {
 		
 		if( e instanceof PolicyViolationException ) {
@@ -27,6 +27,6 @@ public class GlobalExceptionHandler {
 		}
 		
 		return "error/500";
-	}*/
+	}
 
 }

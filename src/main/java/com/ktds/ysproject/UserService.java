@@ -59,7 +59,7 @@ public class UserService implements AuthenticationProvider{
 				grade = "ROLE_ADMIN";
 			}
 			else if ( isLoginSuccess.getMemberAuthority() == 1 ) {
-				grade = "REVIEW_USER";
+				grade = "ROLE_REVIEW";
 			}
 			else {
 				grade = "ROLE_USER";
@@ -68,11 +68,12 @@ public class UserService implements AuthenticationProvider{
 			roles.add(new SimpleGrantedAuthority(grade));
 			if (grade.equals("ROLE_ADMIN")) {
 				roles.add(new SimpleGrantedAuthority("ROLE_USER"));
-				roles.add(new SimpleGrantedAuthority("REVIEW_USER"));
+				roles.add(new SimpleGrantedAuthority("ROLE_REVIEW"));
 			}
-			else if (grade.equals("REVIEW_USER")) {
+			else if (grade.equals("ROLE_REVIEW")) {
 				roles.add(new SimpleGrantedAuthority("ROLE_USER"));
 			}
+			System.out.println("!!!"+ roles);
 			result = new UsernamePasswordAuthenticationToken(email, userPassword, roles);
 			User user = new User(email, userPassword, grade, isBlockAccount, token);
 			result.setDetails(user);

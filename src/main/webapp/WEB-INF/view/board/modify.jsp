@@ -6,6 +6,7 @@
  	<div id="alldiv">
 	 	<h1> BOARD MODIFY</h1>
 		<form:form id="boardModifyForm" modelAttribute="boardVO" method="post" action="/GameReview/board/modify" enctype="multipart/form-data" >
+			<input type="hidden" name="token" value="${sessionScope._TOKEN_}" />
 			<div>
 				<input type="hidden" id="boardId" name="boardId" value="${board.boardId}"/>
 			</div>
@@ -31,7 +32,17 @@
 				<input type="file" id="posterPath" name="poster" accept=".jpg, .jpeg, .png, .gif" value="${board.poster}"/>
 			</div>
 			<div>
+				<ul>
+					<form:errors path="title"/> 
+					<form:errors path="content"/>
+				</ul>
+			</div>
+			<div>
 				<input type="submit" id="modifyBtn" value="수정" />
+			</div>
+			<div class="href">
+				<a style="margin-right:20px;" href="/GameReview/board/list/${board.boardDivision}">목록</a>
+				<a href="/GameReview/main/home">메인 화면</a> 
 			</div>
 		</form:form>
 	</div>

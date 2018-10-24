@@ -33,12 +33,19 @@
 				<c:choose>
 					<c:when test="${not empty sessionScope._USER_}">
 						${sessionScope._USER_.nickname} 님 환영합니다.
-						<a id="logoutBtn" href="/GameReview/member/logout2">로그아웃</a>
+						<div class="href" style="display:inline-block; margin-reft:10px; margin-right:10px;">
+							<a id="logoutBtn" href="/GameReview/member/logout2">로그아웃</a>
+						</div>
 					</c:when>
 					<c:otherwise>
 						로그인이 필요합니다. 
+						<div class="href" style="display:inline-block; margin-reft:10px; margin-right:10px;">
+							<a href="/GameReview/member/login"> 
+								로그인
+							</a>
+						</div>
 					</c:otherwise>
-				</c:choose>
+				</c:choose>   
 			</div>
 		</header>
 		<section class="inline">

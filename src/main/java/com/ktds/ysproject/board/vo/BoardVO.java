@@ -25,13 +25,6 @@ public class BoardVO {
 	private int recommendCount;
 	private String email;
 	private String token;
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
 
 	private MemberVO memberVO;
 	
@@ -39,6 +32,14 @@ public class BoardVO {
 
 	private MultipartFile video;
 	private MultipartFile poster;
+	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 	
 	public String getBoardId() {
 		return boardId;

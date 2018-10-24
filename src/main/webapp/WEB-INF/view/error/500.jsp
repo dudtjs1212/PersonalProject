@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
- 404 Error
+ 500 Error
 </body>
 </html>

@@ -112,20 +112,20 @@
 				<div class="error"> Password 3회이상 실패하여 1시간 동안 계정이 잠겼습니다. <br/> 1시간 이후에 다시 이용 바랍니다.</div>
 			</c:if>
 		<form:form id = "memberLoginForm" modelAttribute="memberVO">
-			<div>
+			<div style="margin-bottom:20px;">
 				<input type="email" id="email" name="email" placeholder="Email" value="${memberVO.email}"/>
 			</div>
 			<div>
 				<form:errors path="email"/>
 			</div>
-			<div>
+			<div style="margin-bottom:20px;">
 				<input type="password" id="password" name="password" placeholder="Password" value="${memberVO.password}" />
 			</div>
-			<div>
+			<div >
 				<form:errors path="password"/>
 			</div>
 			<div>
-				<input type="button" id="loginBtn" value="로그인" />
+				<input style="background-color:" type="button" id="loginBtn" value="로그인" />
 			</div>
 		</form:form>
 		<div class="href">

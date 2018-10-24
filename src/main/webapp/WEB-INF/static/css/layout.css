@@ -8,6 +8,16 @@ body {
 	background-color: #50bcdf;
 }
 
+.rereplyBtn, .parentReplyBtn, .replyRegistBtn {
+	text-decoration: none;
+	color: #fff;
+	letter-spacing: 1px;
+	text-shadow: 2px 2px black;
+	font-size:1.3em;
+	border : none;
+	background-color: #50bcdf;
+}
+
 .error {
    background-color: rgba(255, 125, 125, 0.7);
    padding-left: 15px;
@@ -86,7 +96,7 @@ section.inline > aside {
    top: 30px;
    bottom: 0px;
    left: 0px;
-   /* overflow-y: scroll; */
+  /*  overflow-y: scroll; */
 }
 
 /* 
@@ -122,6 +132,62 @@ section.inline > section {
   	border-radius: 7px;
 }
 
+#boardCreateForm #title, #boardModifyForm #title {
+	width: 1024px;
+	border: 1px solid #bbb;
+  	border-radius: 7px;
+  	padding: 10px;
+  	height :30px;
+  	margin-bottom : 20px;
+}
+
+#boardCreateForm #content, #boardModifyForm #content {
+	width: 1024px;
+	border: 1px solid #bbb;
+  	border-radius: 7px;
+  	padding: 10px;
+  	height :700px;
+  	margin-bottom: 20px;
+}
+
+#boardCreateForm #videoPath, #boardModifyForm #videoPath {
+  	margin-bottom: 20px;
+  	border-radius: 15px;
+  	border: 4px solid rgb(135, 177, 226);
+  	background-color: #fff;
+  	width:900px;
+}
+
+#boardCreateForm #posterPath, #boardModifyForm #posterPath {
+  	margin-bottom: 20px;
+  	border-radius: 15px;
+  	border: 4px solid rgb(135, 177, 226);
+  	background-color: #fff;
+  	width:900px;
+}
+
+#boardCreateForm #writeBtn, #boardModifyForm #modifyBtn {
+	text-decoration: none;
+	color: #fff;
+	letter-spacing: 1px;
+	text-shadow: 2px 2px black;
+	font-size:1.3em;
+	border : none;
+	background-color: #50bcdf;
+	margin-bottom : 20px;
+	margin-right : 20px;
+}
+
+.rereplyBtn, .replyDelBtn, .replyRegistBtn .parentReplyBtn {
+	text-decoration: none;
+	color: #fff;
+	letter-spacing: 1px;
+	text-shadow: 2px 2px black;
+	font-size:1.3em;
+	border : none;
+	background-color: #50bcdf;
+}
+
 #memberRegistForm #normalCheck, #memberRegistForm #reviewCheck {
 	width:10px;
 }
@@ -139,11 +205,27 @@ section.inline > section {
 
 .listpage {
 	background-color: #fff;
-	border-top: 2px solid rgb(135, 177, 226);
-	border-left: 2px solid rgb(135, 177, 226);
+	border-top: 4px solid rgb(135, 177, 226);
+	border-left: 4px solid rgb(135, 177, 226);
 	border-radius: 15px;
 	margin-bottom:15px;
 	height:150px;
+	box-sizing:border-box;
+}
+
+#zeroBoard, #oneBoard, #twoBoard, #threeBoard {
+	background-color: #fff;
+	border-top: 4px solid rgb(135, 177, 226);
+	border-left: 4px solid rgb(135, 177, 226);
+	border-radius: 15px;
+	width: 600px;
+	height:440px;
+	box-sizing:border-box;
+	display:inline-block;
+	margin-right:20px;
+	margin-bottom:20px;
+	margin-top:20px;
+	float : left;
 }
 
 .href a{
@@ -151,6 +233,54 @@ section.inline > section {
 	color: #fff;
 	letter-spacing: 1px;
 	text-shadow: 2px 2px black;
+	font-size:1.3em;
+}
+
+.mainHref a{
+	text-decoration: none;
+	color: #000;
+	letter-spacing: 1px;
+	text-shadow: 1px 1px #50bcdf;
+	font-size:1.4em;
+	margin-left:15px;
+	border-bottom: 2px solid rgb(135, 177, 226);
+}
+
+.mainHref {
+	margin-top : 15px;
+}
+
+.mainBoardList a {
+	text-decoration: none;
+	color: #000;
+	letter-spacing: 1px;
+	text-shadow: 1px 1px #50bcdf;
+	font-size:1em;
+	margin-left:15px;
+	border-bottom: 2px solid rgb(135, 177, 226);
+}
+
+.spantitle {
+	margin-rifgt:10px; 
+	display:inline-block;
+	width:350px;
+}
+
+.spanId {
+	width: 25px; 
+	display:inline-block;
+	margin-left:10px;
+}
+
+.spandt {
+	width : 169px;
+	margin-right:10px;
+	display:inline-block;
+}
+
+.mainBoardList {
+	margin-top : 15px;
+	width:100%;
 }
 
 #emailError, #nameError, #nicknameError, #passwordError, #passwordConfirmError {
