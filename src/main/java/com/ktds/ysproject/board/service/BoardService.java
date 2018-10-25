@@ -29,4 +29,6 @@ public interface BoardService {
 	
 	public List<BoardVO> readAllDivisionThreeBoard();
 	
+	public boolean deleteOneBoard(String boardId);
+	
 }

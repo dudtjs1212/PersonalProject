@@ -24,16 +24,26 @@
 			</c:choose>
 			<c:forEach items="${boardList}" var="board">
 				<div class="listpage">
-					<a style="display: inline-block;" href="<c:url value='/board/detail/${board.boardId}'/>">
-						<c:if test="${not empty board.posterPath}">
-							<div class="poster" style="display: inline-block;">
-								<img style="width: 150px; height: 130px; border-radius: 15px; margin-left:10px; margin-top:10px;" src="<c:url value='/board/poster/download/${board.posterPath}'/>"/>
-							</div>
-						</c:if>
-					</a>
+					<c:if test="${board.delWhether eq 'N'}">
+						<a style="display: inline-block;" href="<c:url value='/board/detail/${board.boardId}'/>">
+							<c:if test="${not empty board.posterPath}">
+								<div class="poster" style="display: inline-block;">
+									<img style="width: 150px; height: 130px; border-radius: 15px; margin-left:10px; margin-top:10px;" src="<c:url value='/board/poster/download/${board.posterPath}'/>"/>
+								</div>
+							</c:if>
+						</a>
+					</c:if>
 					<div class="titlediv" style="display: inline-block; width:auto; height: 130px;">
 						<a style="display: inline-block; margin-top:5px;" href="<c:url value='/board/detail/${board.boardId}'/>">
-						<h2 style="display: inline-block; padding-left: 10px; margin-top:5px; ">${board.title} </h2></a>
+						<c:choose>
+							<c:when test="${board.delWhether eq 'N'}">
+								<h2 style="display: inline-block; padding-left: 10px; margin-top:5px; ">${board.title} </h2>
+							</c:when>
+							<c:otherwise>
+								<h2 style="display: inline-block; padding-left: 10px; margin-top:5px; ">삭제된 게시물입니다. </h2>
+							</c:otherwise>
+						</c:choose>
+						</a>
 						<br/>
 						<h4 style="padding-left: 10px; padding-top: 3px; margin-top:8px; display: inline-block;">${board.memberVO.nickname}</h4>
 						<br/>

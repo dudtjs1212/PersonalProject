@@ -16,6 +16,7 @@
 								, URL_ADDRESS
 								, RECOMMEND_COUNT
 								, EMAIL
+								, DEL_WHETHER
 							)
 		VALUES				(
 								'BD-'|| TO_CHAR(SYSDATE, 'YYYYMMDDHH24') || '-' || LPAD(BOARD_ID_SEQ.NEXTVAL, 6, '0')
@@ -29,6 +30,7 @@
 								, #{urlAddress}
 								, 0
 								, #{email}
+								, 'N'
 							)
 	</insert>
 	
@@ -44,6 +46,7 @@
 		<result property="urlAddress" column="URL_ADDRESS"/>
 		<result property="recommendCount" column="RECOMMEND_COUNT"/>
 		<result property="email" column="EMAIL"/>
+		<result property="delWhether" column="DEL_WHETHER"/>
 		<association property="memberVO" javaType="MemberVO">
 			<id property="email" column="EMAIL"/>
 			<result property="name" column="NAME"/>
@@ -69,6 +72,7 @@
 				, B.URL_ADDRESS 
 				, B.RECOMMEND_COUNT 
 				, B.EMAIL 
+				, B.DEL_WHETHER
 				, M.NAME 
 				, M.NICKNAME
 				, M.PASSWORD
@@ -100,6 +104,7 @@
 								, B.URL_ADDRESS 
 								, B.RECOMMEND_COUNT 
 								, B.EMAIL 
+								, B.DEL_WHETHER
 								, M.NAME 
 								, M.NICKNAME
 								, M.PASSWORD
@@ -161,6 +166,7 @@
 				, B.URL_ADDRESS 
 				, B.RECOMMEND_COUNT 
 				, B.EMAIL
+				, B.DEL_WHETHER
 				, M.NAME 
 				, M.NICKNAME
 				, M.PASSWORD
@@ -189,6 +195,7 @@
 				, B.URL_ADDRESS 
 				, B.RECOMMEND_COUNT 
 				, B.EMAIL 
+				, B.DEL_WHETHER
 				, M.NAME 
 				, M.NICKNAME
 				, M.PASSWORD
@@ -217,6 +224,7 @@
 				, B.URL_ADDRESS 
 				, B.RECOMMEND_COUNT 
 				, B.EMAIL 
+				, B.DEL_WHETHER
 				, M.NAME 
 				, M.NICKNAME
 				, M.PASSWORD
@@ -245,6 +253,7 @@
 				, B.URL_ADDRESS 
 				, B.RECOMMEND_COUNT 
 				, B.EMAIL 
+				, B.DEL_WHETHER
 				, M.NAME 
 				, M.NICKNAME
 				, M.PASSWORD
@@ -260,5 +269,11 @@
 		AND 	B.BOARD_DIVISION = 3
 		ORDER	BY B.CRT_DT DESC
 	</select>
+	
+	<update id="deleteOneBoard" parameterType="String">
+		UPDATE		BOARD
+		SET			DEL_WHETHER = 'Y'
+		WHERE		BOARD_ID = #{boardId}
+	</update>
 	 
 </mapper>

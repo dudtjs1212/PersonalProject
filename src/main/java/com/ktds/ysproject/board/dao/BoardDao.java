@@ -27,4 +27,6 @@ public interface BoardDao {
 	
 	public List<BoardVO> selectAllDivisionThreeBoard();
 	
+	public int deleteOneBoard(String boardId);
+	
 }

@@ -72,6 +72,11 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao {
 	public List<BoardVO> selectAllDivisionThreeBoard() {
 		return getSqlSession().selectList("BoardDao.selectAllDivisionThreeBoard");
 	}
+
+	@Override
+	public int deleteOneBoard(String boardId) {
+		return getSqlSession().update("BoardDao.deleteOneBoard", boardId);
+	}
 	
 	
 

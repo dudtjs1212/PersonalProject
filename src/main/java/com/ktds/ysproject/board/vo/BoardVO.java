@@ -25,6 +25,15 @@ public class BoardVO {
 	private int recommendCount;
 	private String email;
 	private String token;
+	private String delWhether;
+
+	public String getDelWhether() {
+		return delWhether;
+	}
+
+	public void setDelWhether(String delWhether) {
+		this.delWhether = delWhether;
+	}
 
 	private MemberVO memberVO;
 	
@@ -166,8 +175,9 @@ public class BoardVO {
 		return "BoardVO [boardId=" + boardId + ", title=" + title + ", content=" + content + ", crtDt=" + crtDt
 				+ ", viewCount=" + viewCount + ", videoPath=" + videoPath + ", posterPath=" + posterPath
 				+ ", boardDivision=" + boardDivision + ", urlAddress=" + urlAddress + ", recommendCount="
-				+ recommendCount + ", email=" + email + ", memberVO=" + memberVO + ", replyList=" + replyList
-				+ ", video=" + video + ", poster=" + poster + "]";
+				+ recommendCount + ", email=" + email + ", token=" + token + ", delWhether=" + delWhether
+				+ ", memberVO=" + memberVO + ", replyList=" + replyList + ", video=" + video + ", poster=" + poster
+				+ "]";
 	}
 
 	

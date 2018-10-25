@@ -76,4 +76,9 @@ public class BoardServiceImpl implements BoardService{
 		return boardBiz.readAllDivisionThreeBoard();
 	}
 
+	@Override
+	public boolean deleteOneBoard(String boardId) {
+		return boardBiz.deleteOneBoard(boardId);
+	}
+
 }

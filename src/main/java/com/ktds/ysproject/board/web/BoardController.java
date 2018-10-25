@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -66,8 +67,6 @@ public class BoardController {
 		List<BoardVO> boardOne = boardService.readAllDivisionOneBoard();
 		List<BoardVO> boardTwo = boardService.readAllDivisionTwoBoard();
 		List<BoardVO> boardThree = boardService.readAllDivisionThreeBoard();
-		
-		System.out.println("!!!!!!!!" + boardZero.size());
 		
 		view.addObject("boardZero", boardZero);
 		view.addObject("boardOne", boardOne);
@@ -189,7 +188,6 @@ public class BoardController {
 			view.addObject("boardVO", boardVO);
 			return view;
 		}
-		System.out.println("boardVO" + boardVO.getBoardDivision());
 		boardService.createOneBoard(boardVO);
 		
 		return view;
@@ -212,6 +210,8 @@ public class BoardController {
 		
 		//html태그, 게시글, 페이지정보
 		PageExplorer pageExplorer = this.boardService.readAllBoards(boardSearchVO);
+		
+		System.out.println(pageExplorer.getList());
 		
 		for ( Object boardVO : pageExplorer.getList() ) {
 			BoardVO convertVO = (BoardVO) boardVO;
@@ -358,5 +358,22 @@ public class BoardController {
 		} catch (UnsupportedEncodingException e) {
 		   throw new RuntimeException(e.getMessage(), e);
 		}
+	}
+	
+	@GetMapping("/board/delete")
+	public String deleteOneBoardAction(@RequestParam String boardId, @RequestParam int boardDivision) {
+		
+		System.out.println("여길 탔습니다." + boardId + "!!!!!!" + boardDivision);
+		boolean isSuccess = boardService.deleteOneBoard(boardId);
+		
+		if ( isSuccess ) {
+			return "redirect:/board/list/" + boardDivision;
+		}
+		else {
+			return "redirect:/board/detail/" + boardId;
+		}
+		
+		
+		
 	}
 }

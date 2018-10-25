@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s"	uri="http://www.springframework.org/security/tags" %>
 <title>GameReview</title>
 <jsp:include page="/WEB-INF/view/common/layout/layout_header.jsp" />
 <script type="text/javascript">
@@ -52,20 +53,36 @@
 </script>
 	<div id="alldiv">
 		<div class="detailPage">
-			<c:if test="${not empty board.videoPath}">
-				<div class="video" style="display: inline-block;">
-					<video style="width: 100%; height: 70%;"	preload="metadata"
-							autoplay controls="controls" 
-							poster="<c:url value='/board/poster/download/${board.posterPath}' />">
-						<source src="<c:url value='/board/video/download/${board.videoPath}' />" />
-					</video>
-				</div>
+			<c:if test="${board.delWhether eq 'N'}">
+				<c:if test="${not empty board.videoPath}">
+					<div class="video" style="display: inline-block;">
+						<video style="width: 100%; height: 70%;"	preload="metadata"
+								autoplay controls="controls" 
+								poster="<c:url value='/board/poster/download/${board.posterPath}' />">
+							<source src="<c:url value='/board/video/download/${board.videoPath}' />" />
+						</video>
+					</div>
+				</c:if>
 			</c:if>
 			<div class="detailPage">
-				<span> <h1 style="margin-right:15px; margin-left:15px;">${board.title}</h1> </span> 
+				<c:choose>
+					<c:when test="${board.delWhether eq 'N'}">
+						<span> <h1 style="margin-right:15px; margin-left:15px;">${board.title}</h1> </span> 
+					</c:when>
+					<c:otherwise>
+						<span> <h1 style="margin-right:15px; margin-left:15px;">삭제된 게시물입니다.</h1> </span> 
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<div class="detailPage" >
-			<span style="margin-right:15px; margin-left:15px;"> ${board.content} </span> 
+			<c:choose>
+					<c:when test="${board.delWhether eq 'N'}">
+						<span style="margin-right:15px; margin-left:15px;"> ${board.content} </span> 
+					</c:when>
+					<c:otherwise>
+						<span style="margin-right:15px; margin-left:15px;"> 삭제된 게시물 입니다. </span> 
+					</c:otherwise>
+			</c:choose>
 			</div>
 			<div class="detailPage" style="margin-top:30px; padding-bottom:30px; text-align:right; padding-top:30px;  margin-right:15px;">
 			${board.memberVO.nickname} 
@@ -97,8 +114,19 @@
 			<input class="replyRegistBtn" style= "display:inline-block;" type="submit" value="등록"/>
 		</form>
 		<div class="href">
-			<c:if test="${board.email eq sessionScope._USER_.email}">
-				<a style="margin-right:20px;" href="<c:url value='/board/modify/${board.boardId}'/>">수정</a>
+			<c:if test="${board.delWhether eq 'N'}">
+				<c:choose>
+					<c:when test="${board.email eq sessionScope._USER_.email}">
+						<a style="margin-right:20px;" href="<c:url value='/board/modify/${board.boardId}'/>">수정</a>
+						<a style="margin-right:20px;" href="<c:url value='/board/delete?boardId=${board.boardId}&boardDivision=${board.boardDivision}'/>">삭제</a>
+					</c:when>
+					<c:otherwise>
+						<s:authorize access="hasRole('ROLE_ADMIN')">
+							<a style="margin-right:20px;" href="<c:url value='/board/modify/${board.boardId}'/>">수정</a>
+							<a style="margin-right:20px;" href="<c:url value='/board/delete?boardId=${board.boardId}&boardDivision=${board.boardDivision}'/>">삭제</a>
+						</s:authorize>
+					</c:otherwise>
+				</c:choose>
 			</c:if>
 			<a href="/GameReview/board/list/${board.boardDivision}">목록</a>
 		</div>

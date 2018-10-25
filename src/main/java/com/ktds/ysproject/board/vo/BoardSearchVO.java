@@ -14,6 +14,16 @@ public class BoardSearchVO {
 	private String searchKeyword;
 	
 	private int boardDivision;
+	
+	private String delWhether;
+
+	public String getDelWhether() {
+		return delWhether;
+	}
+
+	public void setDelWhether(String delWhether) {
+		this.delWhether = delWhether;
+	}
 
 	public int getBoardDivision() {
 		return boardDivision;

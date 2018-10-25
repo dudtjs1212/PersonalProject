@@ -85,4 +85,9 @@ public class BoardBizImpl implements BoardBiz {
 	public List<BoardVO> readAllDivisionThreeBoard() {
 		return boardDao.selectAllDivisionThreeBoard();
 	}
+
+	@Override
+	public boolean deleteOneBoard(String boardId) {
+		return boardDao.deleteOneBoard(boardId)>0;
+	}
 }
