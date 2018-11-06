@@ -15,6 +15,12 @@
 	
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<mvc:mapping path="/**" /> 
+			<bean 	id="logInterceptor"
+						class="com.ktds.ysproject.common.interceptors.LogInterceptor">
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
 			<mvc:mapping path="/member/**" /> 
 			<mvc:exclude-mapping path="/js/**" />
 			<mvc:exclude-mapping path="/css/**" />

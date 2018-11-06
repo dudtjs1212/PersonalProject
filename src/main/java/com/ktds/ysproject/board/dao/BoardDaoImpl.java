@@ -51,10 +51,6 @@ public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao {
 
 	@Override
 	public List<BoardVO> selectAllDivisionZeroBoard() {
-		List<BoardVO> boardLoist = getSqlSession().selectList("BoardDao.selectAllDivisionZeroBoard");
-		for ( BoardVO boardVO : boardLoist) {
-			System.out.println("@!!@!!!!!" + boardVO);
-		}
 		return getSqlSession().selectList("BoardDao.selectAllDivisionZeroBoard");
 	}
 

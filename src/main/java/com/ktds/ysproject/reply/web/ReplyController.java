@@ -1,5 +1,7 @@
 package com.ktds.ysproject.reply.web;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +33,11 @@ public class ReplyController {
 	}
 	
 	@GetMapping("/reply/delete/{replyId}")
-	public String doReplyDeleteAction(@PathVariable String replyId) {
+	public String doReplyDeleteAction(@PathVariable String replyId, HttpSession session) {
 		ReplyVO reply = replyService.readOneReply(replyId);
-		this.replyService.deleteReply(reply);
+		if ( session.getAttribute("_USER_").equals(reply.getEmail()) ) {
+			this.replyService.deleteReply(reply);
+		}
 		return "redirect:/board/detail/" + reply.getBoardId();
 	}
 	

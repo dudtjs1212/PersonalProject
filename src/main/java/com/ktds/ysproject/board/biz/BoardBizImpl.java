@@ -39,7 +39,9 @@ public class BoardBizImpl implements BoardBiz {
 		BoardVO board = boardDao.selectOneBoard(boardId);
 		
 		MemberVO memberVO = (MemberVO) session.getAttribute("_USER_");
+		System.out.println("게시물 조회수 업데이트 : " + board.getEmail());
 		if ( !memberVO.getEmail().equals(board.getEmail()) ) {
+			System.out.println("게시물 조회수 업데이트");
 			this.boardDao.updateViewCount(boardId);
 			board = boardDao.selectOneBoard(boardId);
 		}

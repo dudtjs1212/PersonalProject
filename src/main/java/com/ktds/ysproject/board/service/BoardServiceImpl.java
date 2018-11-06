@@ -50,7 +50,7 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public BoardVO readOneBoard(String boardId, HttpSession session) {
-		BoardVO boardVO = boardBiz.readOneBoard(boardId);
+		BoardVO boardVO = boardBiz.readOneBoard(boardId, session);
 		List<ReplyVO> replyList = replyBiz.selectAllReplies(boardId);
 		boardVO.setReplyList(replyList);
 		return boardVO;

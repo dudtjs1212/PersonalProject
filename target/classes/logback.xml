@@ -1,5 +1,14 @@
 <configuration>
 
+	<appender name="qos" class="ch.qos.logback.core.FileAppender">
+          <file>D:/logs/QoS.log</file>
+      <encoder>
+         <pattern>#%d{yyyy:MM:dd:HH:mm:ss}%msg%n</pattern>
+      </encoder>
+     </appender>
+
+	
+
 	<appender name="STDOUT"
 		class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -7,13 +16,13 @@
 				%msg%n</pattern>
 		</encoder>
 	</appender>
-
+<!--
 	<appender name="STDOUT_File"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>D:/logs/stdout.log</file>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- daily rollover -->
+			
 			<fileNamePattern>D:/logs/stdout.%d{yyyy-MM-dd}.log</fileNamePattern>
 		</rollingPolicy>
 
@@ -22,13 +31,13 @@
 				%msg%n</pattern>
 		</encoder>
 	</appender>
-
+-->
+<!--
 	<appender name="statistics"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>D:/statistics.log</file>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- daily rollover -->
 			<fileNamePattern>D:/statistics.%d{yyyy-MM-dd}.log</fileNamePattern>
 
 		</rollingPolicy>
@@ -36,13 +45,13 @@
 			<pattern>Statistics : DateTime: %d{HH:mm:ss.SSS}, %msg%n</pattern>
 		</encoder>
 	</appender>
-
+-->
+<!--
 	<appender name="param"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>D:/param.log</file>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- daily rollover -->
 			<fileNamePattern>D:/param.%d{yyyy-MM-dd}.log</fileNamePattern>
 
 		</rollingPolicy>
@@ -51,15 +60,20 @@
 			</pattern>
 		</encoder>
 	</appender>
-
+-->
+	<logger level="debug" name="com.ktds"> 
+		<appender-ref ref="qos"/>
+	</logger>
+<!--
 	<logger level="info" name="list.statistics">
 		<appender-ref ref="statistics" />
 	</logger>
-
+-->
+<!--
 	<logger level="debug" name="com.ktds">
 		<appender-ref ref="param" />
 	</logger>
-
+-->
 	<!-- <logger level="debug" name="org.springframework">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="STDOUT_File" />

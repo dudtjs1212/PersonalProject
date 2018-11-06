@@ -363,7 +363,6 @@ public class BoardController {
 	@GetMapping("/board/delete")
 	public String deleteOneBoardAction(@RequestParam String boardId, @RequestParam int boardDivision) {
 		
-		System.out.println("여길 탔습니다." + boardId + "!!!!!!" + boardDivision);
 		boolean isSuccess = boardService.deleteOneBoard(boardId);
 		
 		if ( isSuccess ) {
